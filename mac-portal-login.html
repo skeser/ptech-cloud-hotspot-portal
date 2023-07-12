@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="captiveportal-tailwindcss-3.3.1.css"></script>
+    <script src="captiveportal-tailwind.config.js"></script>
+
+    <script src="captiveportal-jquery-3.6.4.min.js"></script>
+
+    <script src="captiveportal-mac-portal-login.js"></script>
+
+    <title>TechNexus Internet Login Page</title>
+</head>
+<body>
+<section class="bg-gray-50 dark:bg-gray-900">
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+            <img class="w-8 h-8 mr-2" src="TeamWorking_LogoMark_Circle_v2_DkBlue_Circle_40_40.png" alt="Teamworking By TechNexus Logo">
+            Teamworking By TechNexus
+        </a>
+        <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+
+            <!-- mac register form -->
+            <div id="mac-register-div" class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                <h2 class="text-base font-medium leading-tight tracking-tight text-gray-900 md:text-lg dark:text-white">
+                    To use the internet service, fill out the form and click the save button.
+                </h2>
+                <form id="mac-register-form" name="mac-register-form" class="space-y-4 md:space-y-6" method="POST" action="">
+
+                    <!-- cell phone -->
+                    <div>
+                        <label for="cell_phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cell Phone (10 digits) </label>
+                        <div class="flex">
+                            <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                            +1
+                            </span>
+                            <input type="text" name="cell_phone" id="cell_phone" class=" rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" maxlength="10" required="">
+                        </div>
+                    </div>
+
+                    <!-- first name -->
+                    <div>
+                        <label for="firstName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
+                        <input type="text" name="firstName" id="firstName" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="first name here" required="">
+                    </div>
+
+                    <!-- last name -->
+                    <div>
+                        <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
+                        <input type="text" name="lastName" id="lastName" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="last name here" required="">
+                    </div>
+
+                    <!-- email -->
+                    <div>
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                        <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
+                    </div>
+
+                    <!-- hidden things:1 -->
+                    <!-- production
+                    <input type="hidden" id="mac_mac_register" name="mac_mac_register" value="#CLIENT_MAC#">
+                    <input type="hidden" id="ip_mac_register" name="ip_mac_register" value="#CLIENT_IP#">
+                    -->
+
+                    <!-- test env -->
+                    <input type="hidden" id="mac_mac_register" name="mac_mac_register" value="00:00:00:00:00:01">
+                    <input type="hidden" id="ip_mac_register" name="ip_mac_register" value="10.1.1.5">
+
+
+                    <button type="submit"
+                            class="w-full text-white bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:bg-gray-700 font-bold rounded-lg text-base px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-gray-700 dark:focus:ring-primary-800">
+                        SAVE
+                    </button>
+                    <!--
+                    <p class="text-sm font-light text-right text-gray-500 dark:text-gray-400">Mac: ip:</p>
+                    -->
+                </form>
+            </div>
+
+            <!-- sms validation form -->
+            <div id="sms-validation-div" class="p-6 space-y-4 md:space-y-6 sm:p-8">
+
+                <h2 class="text-base font-medium leading-tight tracking-tight text-gray-900 md:text-lg dark:text-white">
+                    This device requires sms verification.
+                </h2>
+
+                <!-- sms REQUEST form -->
+                <form id="sms-request-form" name="sms-request-form" class="space-y-4 md:space-y-6" method="POST" action="">
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label for="cell_phone_sms_request" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cell Phone</label>
+                            <input type="text" id="cell_phone_sms_request" name="cell_phone_sms_request"  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required pattern="[0-9]{10}" maxlength="10">
+                        </div>
+
+                        <!-- response msg -->
+                        <div id="sms-request-form-result" class="pt-8 pl-6">
+                        </div>
+                    </div>
+
+                    <!-- hidden things : 2
+                    <input type="hidden" id="mac_sms_request" name="mac_sms_request" value="#CLIENT_MAC#">
+                    <input type="hidden" id="ip_sms_request" name="ip_sms_request" value="#CLIENT_IP#">
+                    -->
+
+
+                    <!-- test env -->
+                    <input type="hidden" id="mac_sms_request" name="mac_sms_request" value="00:00:00:00:00:01">
+                    <input type="hidden" id="ip_sms_request" name="ip_sms_request" value="10.1.1.5">
+
+
+
+                    <button type="submit"
+                            class="w-full text-white bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:bg-gray-700 font-bold rounded-lg text-base px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-gray-700 dark:focus:ring-primary-800">
+                        GET CODE
+                    </button>
+                </form>
+
+                <!-- sms VALIDATION form -->
+                <form id="sms-validation-form" name="sms-validation-form" class="space-y-4 md:space-y-6" method="POST" action="">
+                    <!-- <div class="grid grid-cols-3 gap-3"> -->
+                    <div class="grid grid-flow-col auto-cols-max">
+                        <div>
+                            <label for="cell_phone_verification_code" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Validation Code</label>
+                            <input type="text" name="cell_phone_verification_code" id="cell_phone_verification_code" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required pattern="[0-9]{6}" maxlength="6">
+                        </div>
+
+                        <!-- response msg -->
+                        <div id="countdown" class="pt-8 pl-6 max-w-min">
+
+                        </div>
+                        <div id="sms-validation-form-result" class="pt-8 pl-4">
+
+                        </div>
+                    </div>
+
+                    <!-- hidden things : PRODUCTION : 3
+                    <input type="hidden" id="mac_sms_validation_code" name="mac_sms_validation_code" value="#CLIENT_MAC#">
+                    <input type="hidden" id="ip_sms_validation_code" name="ip_sms_validation_code" value="#CLIENT_IP#">
+                    -->
+
+
+                    <!-- test env -->
+                    <input type="hidden" id="mac_sms_validation_code" name="mac_sms_validation_code" value="00:00:00:00:00:01">
+                    <input type="hidden" id="ip_sms_validation_code" name="ip_sms_validation_code" value="10.1.1.5">
+
+
+
+                    <button type="submit"
+                            class="w-full text-white bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:bg-gray-700 font-bold rounded-lg text-base px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-gray-700 dark:focus:ring-primary-800">
+                        VALIDATE
+                    </button>
+                    <!--  <p class="text-sm font-light text-right text-gray-500 dark:text-gray-400">Mac: ip:</p>    -->
+                </form>
+            </div>
+
+            <!-- MAC Check Hiddens:4 -->
+            <!-- PRODUCTION
+            <input type="hidden" id="mac_mac_check" name="mac_mac_check" value="#CLIENT_MAC#">
+            <input type="hidden" id="ip_mac_check" name="ip_mac_check" value="#CLIENT_IP#">
+            -->
+
+
+            <!-- test env -->
+            <input type="hidden" id="mac_mac_check" name="mac_mac_check" value="00:00:00:00:00:01">
+            <input type="hidden" id="ip_mac_check" name="ip_mac_check" value="10.1.1.5">
+
+
+
+            <!-- Captive Portal Hiddens : PRODUCTION-->
+            <input type="hidden" id="portal_action" name="portal_action"  value="#PORTAL_ACTION#">
+            <input type="hidden" id="redirurl" name="redirurl"  value="#PORTAL_REDIRURL#">
+            <input type="hidden" id="zone" name="zone"  value="#PORTAL_ZONE#">
+            <input type="hidden" id="mac" name="mac" value="#CLIENT_MAC#">
+            <input type="hidden" id="ip" name="ip" value="#CLIENT_IP#">
+
+            <!-- server response messages : info -->
+            <div id="info" class="p-4 space-y-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+            </div>
+
+            <!-- server response messages : warn -->
+            <div id="warn" class="p-4 space-y-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300" role="alert">
+            </div>
+
+            <!-- server response messages : error -->
+            <div id="error" class="p-4 space-y-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
