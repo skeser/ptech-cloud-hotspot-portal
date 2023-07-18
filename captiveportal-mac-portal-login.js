@@ -3,7 +3,15 @@ $(function () {
 
     init();
 
-    let PORTAL_ACTION_URL = $("#portal_action").val()
+    let PORTAL_ACTION_URL = $("#portal_action").val();
+    /*
+    firefox için yonlendirme girişimi.. ama çalışmıyor.. chrome icin enable login pop up dan sonra calisiyor ama
+    firefox illaki msn e basiyor.. kalsın böyle..
+    let PORTAL_ACTION_URL = $("#portal_action").val() + "&redirurl=" + $("#redirurl").val();
+    //http://10.1.80.1:8002/index.php?zone=captive_portal_ptech_cloud_hotspot_dev&redirurl=https://www.google.com.tr/
+    */
+
+    let TENANT_SERVICE_URL = "http://ptech-cloud-hotspot-service.local/";
 
     let cell_phone = "undefined";
 
@@ -18,7 +26,7 @@ $(function () {
     // 1-) GET:is-alive --------------------------------------------------------------------------------------------
     $.ajax({
         type: "GET",
-        url: "http://portal.il.technexus.com/api/v1/is-alive",
+        url: TENANT_SERVICE_URL + "api/v1/is-alive",
         dataType: "json"
     }).done(function (response) {
         isAliveDone(response)
@@ -35,7 +43,7 @@ $(function () {
     };
     $.ajax({
         type: "POST",
-        url: "http://portal.il.technexus.com/api/v1/mac-status-check",
+        url: TENANT_SERVICE_URL + "api/v1/mac-status-check",
         data: mac_status_check_post_data
     }).done(function (response) {
         macStatusCheckDone(response)
@@ -60,7 +68,7 @@ $(function () {
         };
 
         $.ajax({
-            url: "http://portal.il.technexus.com/api/v1/mac-portal-form-save",
+            url: TENANT_SERVICE_URL + "api/v1/mac-portal-form-save",
             type: "POST",
             data: interentUserData
         }).done(function (response) {
@@ -88,7 +96,7 @@ $(function () {
         };
 
         $.ajax({
-            url: "http://portal.il.technexus.com/api/v1/sms-request-form",
+            url: TENANT_SERVICE_URL + "api/v1/sms-request-form",
             type: "POST",
             data: smsRequestData
         })
@@ -115,7 +123,7 @@ $(function () {
         };
 
         $.ajax({
-            url: "http://portal.il.technexus.com/api/v1/sms-validation-form",
+            url: TENANT_SERVICE_URL + "api/v1/sms-validation-form",
             type: "POST",
             data: smsValidateData
         })
@@ -126,15 +134,6 @@ $(function () {
                 debugFail("sms_VALIDATION_form_POST_REPONSE_fail : ", xhr, status, error);
                 handlingPostFail("err : service unavailable (sms validation service fail)");
             });
-    });
-
-    $('#captive_portal_login_form').on("submit", function (event) {
-
-        event.preventDefault();
-
-        console.log("captive_portal_login_form worked you are use redirect to internet");
-        alert("captive_portal_login_form worked you are use redirect to internet");
-        return true;
     });
 
     // functions : begin--------------------------------------------------------------------------------------------
@@ -177,50 +176,10 @@ $(function () {
         $('#error').show().html(message);
     }
 
-    function reConnect(xhr, url) {
-        // Eğer xhr nesnesi açıksa, kapat
-        if (xhr.readyState !== 0 && xhr.readyState !== 4) {
-            xhr.abort();
-        }
-
-        // Yeni bir xhr nesnesi oluştur
-        const newXhr = new XMLHttpRequest();
-        newXhr.open("GET", url, true);
-
-        // Yeni xhr nesnesinin hazır olduğunda gerçekleşecek işlemler
-        newXhr.onload = function () {
-            console.log("Uzak sunucuyla yeni bir bağlantı kuruldu.");
-        };
-
-        // Yeni xhr nesnesini döndür
-        return newXhr;
-    }
-
     function redirectURL() {
-        location.reload();  //location.reload(true);
-        $(location).attr('href', 'https://teamworking.vc/');
-        window.open("https://teamworking.vc/", '_blank').focus();
-    }
 
-    function captive_portal_post_form() {
-        let captivePortalFormData = {
+        $(location).attr('href', PORTAL_ACTION_URL);
 
-            redirurl: $('#redirurl').val(),
-            zone: $('#zone').val(),
-            mac: $('#mac').val(),
-            ip: $('#ip').val()
-        };
-
-        $.ajax({
-            type: "POST",
-            url: $('#portal_action').val(),
-            data: captivePortalFormData
-        }).done(function (response) {
-            console.log("captiveportal form post success" + response);
-        })
-            .fail(function (xhr, status, error) {
-                console.log("captiveportal form post NOT success" + error + xhr + status);
-            });
     }
 
     function setCellPhoneInputText(cell_phone) {
@@ -294,7 +253,6 @@ $(function () {
 
         if (response.event_code === "mchk-info-1") {
             responseMessageGenerator(response);
-
             redirectURL();
         }
 
@@ -303,9 +261,7 @@ $(function () {
         }
 
         if (response.event_code === "mchk-info-2") {
-
             responseMessageGenerator(response);
-
             redirectURL();
         }
 
@@ -338,16 +294,6 @@ $(function () {
             $('#mac-register-div').hide();
 
             responseMessageGenerator(response);
-
-            let xhr = new XMLHttpRequest();
-
-            xhr.open("GET", PORTAL_ACTION_URL, true);
-            xhr.send();
-
-            xhr = reConnect(xhr, PORTAL_ACTION_URL);
-            console.log("xhr : " + xhr);
-
-            captive_portal_post_form();
 
             redirectURL();
         }
