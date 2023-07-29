@@ -1,15 +1,12 @@
 <!-- Scripts-->
-$(function () {
+//$(function () {
+$(document).ready(function(){
+
+    let FORM_TEXT = {};
 
     init();
 
     let PORTAL_ACTION_URL = $("#portal_action").val();
-    /*
-    firefox için yonlendirme girişimi.. ama çalışmıyor.. chrome icin enable login pop up dan sonra calisiyor ama
-    firefox illaki msn e basiyor.. kalsın böyle..
-    let PORTAL_ACTION_URL = $("#portal_action").val() + "&redirurl=" + $("#redirurl").val();
-    //http://10.1.80.1:8002/index.php?zone=captive_portal_ptech_cloud_hotspot_dev&redirurl=https://www.google.com.tr/
-    */
 
     let TENANT_SERVICE_URL = "http://ptech-cloud-hotspot-service.local/";
 
@@ -22,6 +19,24 @@ $(function () {
 
     // Geri sayımı gösteren HTML elementinin seçimi
     let countdownElement = $('#countdown');
+
+    // 0-) TEXTS Loads with Language Lines-------------------------------------------------------------------------
+    $.ajax({
+        type: "GET",
+        url: TENANT_SERVICE_URL + "api/v1/lang_test",
+        dataType: "json"
+    }).done(function (response) {
+        FORM_TEXT = response;
+        //console.log("FORM_TEXTS:", response);
+        set_form_text(FORM_TEXT);
+
+        //console.log("title:", response.mac_login_page.register_form.info);
+        //console.log("title:", response);
+    })
+        .fail(function (xhr, status, error) {
+            debugFail("lang_test :", xhr, status, error);
+            handlingPostFail("err : lang load service err");
+        });
 
     // 1-) GET:is-alive --------------------------------------------------------------------------------------------
     $.ajax({
@@ -85,7 +100,7 @@ $(function () {
 
         event.preventDefault();
         if (active_sms_code === false){
-            $('#sms-request-form-result').html("please wait, sending..");
+            $('#sms-request-form-result').html(FORM_TEXT.mac_login_page.sms_request_form.code_sending);
         }
         active_sms_code = true;
 
@@ -139,12 +154,64 @@ $(function () {
     // functions : begin--------------------------------------------------------------------------------------------
 
     function init() {
+
+
         $('#sms-validation-div').hide();
         $('#mac-register-div').hide();
 
         $('#info').hide();
         $('#warn').hide();
         $('#error').hide();
+
+        /*
+                $('#mac-register-div').show();
+        $('#sms-validation-div').show();
+        $('#mac-register-div').show();
+
+        $('#info').show();
+        $('#warn').show();
+        $('#error').show();
+
+         */
+
+    }
+
+    function set_form_text(FORM_TEXT){
+        // title
+        document.title = FORM_TEXT.mac_login_page.title;
+
+        //register_form
+
+        $('#tenant_name').text(FORM_TEXT.mac_login_page.register_form.tenant_name);
+        $('#register_form_info').text(FORM_TEXT.mac_login_page.register_form.info);
+
+        $('#cell_phone_label').text(FORM_TEXT.mac_login_page.register_form.cell_phone_label);
+        $('#cell_phone_country_code').text(FORM_TEXT.mac_login_page.register_form.cell_phone_country_code);
+
+        $('#name_label').text(FORM_TEXT.mac_login_page.register_form.name_label);
+        $('#firstName').attr('placeholder', FORM_TEXT.mac_login_page.register_form.name_placehodler);
+
+        $('#last_name_label').text(FORM_TEXT.mac_login_page.register_form.last_name_label);
+        $('#lastName').attr('placeholder', FORM_TEXT.mac_login_page.register_form.lastname_placehodler);
+
+        $('#email_label').text(FORM_TEXT.mac_login_page.register_form.email_label);
+        $('#email').attr('placeholder', FORM_TEXT.mac_login_page.register_form.email_placehodler);
+
+        $('#mac-register-form_submit_button').text(FORM_TEXT.mac_login_page.register_form.button_text);
+
+        //sms_request_form
+
+        $('#sms_request_form_info').text(FORM_TEXT.mac_login_page.sms_request_form.info);
+        $('#sms_request_cell_phone_label').text(FORM_TEXT.mac_login_page.sms_request_form.cell_phone_label);
+
+        $('#sms_request_button_submit').text(FORM_TEXT.mac_login_page.sms_request_form.get_code_button_text);
+
+        //sms_validation_form
+        $('#sms_validate_form_info').text(FORM_TEXT.mac_login_page.sms_validation_form.code_label);
+
+        $('#sms_validate_button_submit').text(FORM_TEXT.mac_login_page.sms_validation_form.validate_button_text);
+
+
     }
 
     function responseMessageGenerator(response) {
