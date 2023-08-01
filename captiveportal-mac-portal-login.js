@@ -23,49 +23,45 @@ $(document).ready(function(){
     // 0-) TEXTS Loads with Language Lines-------------------------------------------------------------------------
     $.ajax({
         type: "GET",
-        url: TENANT_SERVICE_URL + "api/v1/lang_test",
+        url: TENANT_SERVICE_URL + "api/v1/load_captive_portal_text",
         dataType: "json"
     }).done(function (response) {
         FORM_TEXT = response;
-        //console.log("FORM_TEXTS:", response);
-        set_form_text(FORM_TEXT);
-
-        //console.log("title:", response.mac_login_page.register_form.info);
-        //console.log("title:", response);
+        set_captive_portal_form_text(FORM_TEXT);
     })
         .fail(function (xhr, status, error) {
-            debugFail("lang_test :", xhr, status, error);
-            handlingPostFail("err : lang load service err");
+            debugFail("load_captive_portal_text : fail", xhr, status, error);
+            handlingPostFail("err : load_captive_portal_text service err");
         });
 
     // 1-) GET:is-alive --------------------------------------------------------------------------------------------
     $.ajax({
         type: "GET",
-        url: TENANT_SERVICE_URL + "api/v1/is-alive",
+        url: TENANT_SERVICE_URL + "api/v1/ping",
         dataType: "json"
     }).done(function (response) {
-        isAliveDone(response)
+        pingDone(response)
     })
         .fail(function (xhr, status, error) {
-            debugFail("is_alive :", xhr, status, error);
-            handlingPostFail("err : service unavailable (503)");
+            debugFail("ping :", xhr, status, error);
+            handlingPostFail("err : ping service unavailable (503)");
         });
 
-    // 2-) POST:macStatusCheck ------------------------------------------------------------------------------------
-    let mac_status_check_post_data = {
+    // 2-) POST:router ------------------------------------------------------------------------------------
+    let router_post_data = {
         mac: $("#mac_mac_check").val(),
         ip: $("#ip_mac_check").val()
     };
     $.ajax({
         type: "POST",
-        url: TENANT_SERVICE_URL + "api/v1/mac-status-check",
-        data: mac_status_check_post_data
+        url: TENANT_SERVICE_URL + "api/v1/router",
+        data: router_post_data
     }).done(function (response) {
-        macStatusCheckDone(response)
+        registerDone(response)
     })
         .fail(function (xhr, status, error) {
-            debugFail("mac-check_FAIL : ", xhr, status, error);
-            handlingPostFail("err : service unavailable (mac status check fail)");
+            debugFail("router_FAIL : ", xhr, status, error);
+            handlingPostFail("err : service unavailable (router service fail)");
         });
 
     // 3-POST:#mac-register-form -----------------------------------------------------------------------------------
@@ -73,7 +69,7 @@ $(document).ready(function(){
 
         event.preventDefault();
 
-        let interentUserData = {
+        let mac_user_data = {
             cell_phone: $("#cell_phone").val(),
             firstName: $("#firstName").val(),
             lastName: $("#lastName").val(),
@@ -83,15 +79,15 @@ $(document).ready(function(){
         };
 
         $.ajax({
-            url: TENANT_SERVICE_URL + "api/v1/mac-portal-form-save",
+            url: TENANT_SERVICE_URL + "api/v1/register",
             type: "POST",
-            data: interentUserData
+            data: mac_user_data
         }).done(function (response) {
-            macRegisterFormPOSTDone(response)
+            registerFormPOSTDone(response)
         })
             .fail(function (xhr, status, error) {
-                debugFail("mac-register_form_POST_RESPONSE_FAIL : ", xhr, status, error);
-                handlingPostFail("err : service unavailable (mac register service fail)");
+                debugFail("register_form_POST_RESPONSE_FAIL : ", xhr, status, error);
+                handlingPostFail("err : service unavailable (register service fail)");
             });
     });
 
@@ -111,16 +107,16 @@ $(document).ready(function(){
         };
 
         $.ajax({
-            url: TENANT_SERVICE_URL + "api/v1/sms-request-form",
+            url: TENANT_SERVICE_URL + "api/v1/sms-request",
             type: "POST",
             data: smsRequestData
         })
             .done(function (response) {
-                smsRequestFormPOSTDone(response)
+                smsRequestPOSTDone(response)
             })
             .fail(function (xhr, status, error) {
-                debugFail("sms_request_form_post_fail : ", xhr, status, error);
-                handlingPostFail("err : service unavailable (sms sending service fail)");
+                debugFail("sms_request_post_fail : ", xhr, status, error);
+                handlingPostFail("err : service unavailable (sms request(sending) service fail)");
             });
 
     });
@@ -138,16 +134,16 @@ $(document).ready(function(){
         };
 
         $.ajax({
-            url: TENANT_SERVICE_URL + "api/v1/sms-validation-form",
+            url: TENANT_SERVICE_URL + "api/v1/sms-validate",
             type: "POST",
             data: smsValidateData
         })
             .done(function (response) {
-                smsValidationFormPOSTDone(response)
+                smsValidatePOSTDone(response)
             })
             .fail(function (xhr, status, error) {
-                debugFail("sms_VALIDATION_form_POST_REPONSE_fail : ", xhr, status, error);
-                handlingPostFail("err : service unavailable (sms validation service fail)");
+                debugFail("sms_VALIDATE_POST_REPONSE_fail : ", xhr, status, error);
+                handlingPostFail("err : service unavailable (sms validate service fail)");
             });
     });
 
@@ -176,7 +172,7 @@ $(document).ready(function(){
 
     }
 
-    function set_form_text(FORM_TEXT){
+    function set_captive_portal_form_text(FORM_TEXT){
         // title
         document.title = FORM_TEXT.mac_login_page.title;
 
@@ -260,7 +256,7 @@ $(document).ready(function(){
         console.log("+event_code : " + response.event_code);
         console.log("+message : " + response.message);
         console.log("+phone : " + response.phone);
-        console.log("+sms_validation_mod : " + response.sms_validation_mod);
+        console.log("+sms_mod : " + response.sms_mod);
         console.log("END : DEBUG -------------------------------------------");
     }
 
@@ -298,10 +294,10 @@ $(document).ready(function(){
     }
 
     // 1- is_alive service -------------------------------------------------------------------------------------
-    function isAliveDone(response) {
-        debug("is_alive", response);
+    function pingDone(response) {
+        debug("ping", response);
 
-        if (response.event_code === "is_live-error-1") {
+        if (response.event_code === "ping.error.1") {
             $("#mac-register-div").hide();
 
             responseMessageGenerator(response);
@@ -309,30 +305,30 @@ $(document).ready(function(){
     }
 
     // 2- MAC check service -------------------------------------------------------------------------------------
-    function macStatusCheckDone(response) {
-        debug("mac-check", response);
+    function registerDone(response) {
+        debug("router service :", response);
 
-        if (response.event_code === "mchk-warn-3" ||
-            response.event_code === "mchk-warn-2" ||
-            response.event_code === "mchk-warn-6") {
+        if (response.event_code === "router.warn.3" ||
+            response.event_code === "router.warn.2" ||
+            response.event_code === "router.warn.6") {
             responseMessageGenerator(response);
         }
 
-        if (response.event_code === "mchk-info-1") {
+        if (response.event_code === "router.info.1") {
             responseMessageGenerator(response);
             redirectURL();
         }
 
-        if (response.event_code === "mchk-warn-1" || response.event_code === "mchk-warn-4") {
+        if (response.event_code === "router.warn.1" || response.event_code === "router.warn.4") {
             $('#mac-register-div').show();
         }
 
-        if (response.event_code === "mchk-info-2") {
+        if (response.event_code === "router.info.2") {
             responseMessageGenerator(response);
             redirectURL();
         }
 
-        if (response.event_code === "mchk-warn-5") {
+        if (response.event_code === "router.warn.5") {
 
             setCellPhoneInputText(response.phone);
             $('#sms-validation-div').show();
@@ -340,23 +336,23 @@ $(document).ready(function(){
             responseMessageGenerator(response);
         }
 
-        if (response.event_code === "mchk-error-1") {
+        if (response.event_code === "router.error.1") {
             responseMessageGenerator(response);
         }
     }
 
     // 3- MAC REGISTER FORM RESPONSE FUNCTIONS-------------------------------------------------------------------------------
-    function macRegisterFormPOSTDone(response) {
-        debug("mac_register_form_response : ", response);
+    function registerFormPOSTDone(response) {
+        debug("register_form_response : ", response);
 
-        if (response.event_code === "mreg-warn-2" || response.event_code === "mreg-warn-2") {
+        if (response.event_code === "register.warn.2") {
 
             $('#mac-register-div').hide();
 
             responseMessageGenerator(response);
         }
 
-        if (response.event_code === "mreg-info-1") {
+        if (response.event_code === "register.info.1") {
 
             $('#mac-register-div').hide();
 
@@ -365,7 +361,7 @@ $(document).ready(function(){
             redirectURL();
         }
 
-        if (response.event_code === "mreg-warn-3") {
+        if (response.event_code === "register.warn.3") {
 
             $('#mac-register-div').hide();
 
@@ -375,7 +371,7 @@ $(document).ready(function(){
             responseMessageGenerator(response);
         }
 
-        if (response.event_code === "mreg-error-1") {
+        if (response.event_code === "register.error.1") {
 
             $('#mac-register-div').hide();
             $('#sms-validation-div').hide();
@@ -387,10 +383,10 @@ $(document).ready(function(){
     // POST:#mac-register-form -------------------------------------------------------------------------------------
 
     // 4- SMS_REQUEST_SERVICE_RESPONSE FUNCTIONS--------------------------------------------------------------------
-    function smsRequestFormPOSTDone(response) {
-        debug("sms_request_service_form_post_done : ", response);
+    function smsRequestPOSTDone(response) {
+        debug("sms_request_service_post_done : ", response);
 
-        if (response.event_code === "sms_req-warn-1" || response.event_code === "sms_req-warn-2") {
+        if (response.event_code === "sms_request.warn.1" || response.event_code === "sms_request.warn.2") {
 
             $('#mac-register-div').hide();
             $('#sms-request-form').hide();
@@ -398,7 +394,7 @@ $(document).ready(function(){
             responseMessageGenerator(response);
         }
 
-        if (response.event_code === "sms_req-info-1" && response.sms_validation_mod === 0) {
+        if (response.event_code === "sms_request.info.1" && response.sms_mod === 0) {
 
             $("#mac-register-div").hide();
             $('#sms-request-form').hide();
@@ -406,7 +402,7 @@ $(document).ready(function(){
             redirectURL();
         }
 
-        if (response.event_code === "sms_req-info-1" && response.sms_validation_mod === 1) {
+        if (response.event_code === "sms_request.info.1" && response.sms_mod === 1) {
 
             // show SMS_VALIDATION form
             $("#warn").hide();
@@ -424,19 +420,19 @@ $(document).ready(function(){
             $("#sms-request-form-result").html(response.message);
         }
 
-        if (response.event_code === "sms_req-warn-3" && response.sms_validation_mod === 1) {
+        if (response.event_code === "sms_request.warn.3" && response.sms_mod === 1) {
 
             active_sms_code = true;
             $('#sms-request-form-result').html("");
             responseMessageGenerator(response);
         }
 
-        if (response.event_code === "sms_req-error-1" && response.sms_validation_mod === 1) {
+        if (response.event_code === "sms_request.error.1" && response.sms_mod === 1) {
 
             responseMessageGenerator(response);
         }
 
-        if (response.event_code === "sms_req-error-2" && response.sms_validation_mod === 1) {
+        if (response.event_code === "sms_request.error.2" && response.sms_mod === 1) {
 
             responseMessageGenerator(response);
         }
@@ -446,10 +442,10 @@ $(document).ready(function(){
     // END : 4- SMS_REQUEST_SERVICE_RESPONSE FUNCTIONS--------------------------------------------------------------
 
     // 5- SMS_VALIDATION_SERVICE_RESPONSE FUNCTIONS-----------------------------------------------------------------
-    function smsValidationFormPOSTDone(response) {
-        debug("sms_validation_form_post_DONE", response);
+    function smsValidatePOSTDone(response) {
+        debug("sms_validate_form_post_DONE", response);
 
-        if (response.event_code === "sms_val-warn-1" || response.event_code === "sms_val-warn-2") {
+        if (response.event_code === "sms_validate.warn.1" || response.event_code === "sms_validate.warn.2") {
 
             $('#mac-register-div').hide();
             $('#sms-request-form').hide();
@@ -457,7 +453,7 @@ $(document).ready(function(){
             responseMessageGenerator(response);
         }
 
-        if (response.event_code === "sms_val-warn-3") {
+        if (response.event_code === "sms_validate.warn.3") {
 
             $('#mac-register-div').hide();
             $("#sms-validation-div").show(); //
@@ -465,7 +461,7 @@ $(document).ready(function(){
             responseMessageGenerator(response);
         }
 
-        if (response.event_code === "sms_val-warn-4") {
+        if (response.event_code === "sms_validate.warn.4") {
 
             $("#mac-register-div").hide();
             $("#sms-validation-div").show(); //
@@ -474,7 +470,7 @@ $(document).ready(function(){
 
         }
 
-        if (response.event_code === "sms_val-error-1") {
+        if (response.event_code === "sms_validate.error.1") {
 
             $("#mac-register-div").hide();
             $("#sms-validation-div").show(); //
@@ -484,7 +480,7 @@ $(document).ready(function(){
 
         }
 
-        if (response.event_code === "sms_val-info-1") {
+        if (response.event_code === "sms_validate.info.1") {
 
             $("#mac-register-div").hide();
             $("#sms-validation-div").hide(); //
@@ -494,7 +490,7 @@ $(document).ready(function(){
             redirectURL();
         }
 
-        if (response.event_code === "sms_val-error-1") {
+        if (response.event_code === "sms_validate.error.1") {
 
             $("#mac-register-div").hide();
             $("#sms-validation-div").show(); //
