@@ -253,7 +253,7 @@ $(document).ready(function(){
         console.log("BEGIN : DEBUG ");
         console.log("SOURCE : " + source);
         console.log("+type : " + response.type);
-        console.log("+event_code : " + response.event_code);
+        console.log("+event_code : " + response.portal_code);
         console.log("+message : " + response.message);
         console.log("+phone : " + response.phone);
         console.log("+sms_mod : " + response.sms_mod);
@@ -297,7 +297,7 @@ $(document).ready(function(){
     function pingDone(response) {
         debug("ping", response);
 
-        if (response.event_code === "ping.error.1") {
+        if (response.portal_code === "ping.error.1") {
             $("#mac-register-div").hide();
 
             responseMessageGenerator(response);
@@ -308,27 +308,27 @@ $(document).ready(function(){
     function registerDone(response) {
         debug("router service :", response);
 
-        if (response.event_code === "router.warn.3" ||
-            response.event_code === "router.warn.2" ||
-            response.event_code === "router.warn.6") {
+        if (response.portal_code === "router.warn.3" ||
+            response.portal_code === "router.warn.2" ||
+            response.portal_code === "router.warn.6") {
             responseMessageGenerator(response);
         }
 
-        if (response.event_code === "router.info.1") {
+        if (response.portal_code === "router.info.1") {
             responseMessageGenerator(response);
             redirectURL();
         }
 
-        if (response.event_code === "router.warn.1" || response.event_code === "router.warn.4") {
+        if (response.portal_code === "router.warn.1" || response.portal_code === "router.warn.4") {
             $('#mac-register-div').show();
         }
 
-        if (response.event_code === "router.info.2") {
+        if (response.portal_code === "router.info.2") {
             responseMessageGenerator(response);
             redirectURL();
         }
 
-        if (response.event_code === "router.warn.5") {
+        if (response.portal_code === "router.warn.5") {
 
             setCellPhoneInputText(response.phone);
             $('#sms-validation-div').show();
@@ -336,7 +336,7 @@ $(document).ready(function(){
             responseMessageGenerator(response);
         }
 
-        if (response.event_code === "router.error.1") {
+        if (response.portal_code === "router.error.1") {
             responseMessageGenerator(response);
         }
     }
@@ -345,14 +345,14 @@ $(document).ready(function(){
     function registerFormPOSTDone(response) {
         debug("register_form_response : ", response);
 
-        if (response.event_code === "register.warn.2") {
+        if (response.portal_code === "register.warn.2") {
 
             $('#mac-register-div').hide();
 
             responseMessageGenerator(response);
         }
 
-        if (response.event_code === "register.info.1") {
+        if (response.portal_code === "register.info.1") {
 
             $('#mac-register-div').hide();
 
@@ -361,7 +361,7 @@ $(document).ready(function(){
             redirectURL();
         }
 
-        if (response.event_code === "register.warn.3") {
+        if (response.portal_code === "register.warn.3") {
 
             $('#mac-register-div').hide();
 
@@ -371,7 +371,7 @@ $(document).ready(function(){
             responseMessageGenerator(response);
         }
 
-        if (response.event_code === "register.error.1") {
+        if (response.portal_code === "register.error.1") {
 
             $('#mac-register-div').hide();
             $('#sms-validation-div').hide();
@@ -386,7 +386,7 @@ $(document).ready(function(){
     function smsRequestPOSTDone(response) {
         debug("sms_request_service_post_done : ", response);
 
-        if (response.event_code === "sms_request.warn.1" || response.event_code === "sms_request.warn.2") {
+        if (response.portal_code === "sms_request.warn.1" || response.portal_code === "sms_request.warn.2") {
 
             $('#mac-register-div').hide();
             $('#sms-request-form').hide();
@@ -394,7 +394,7 @@ $(document).ready(function(){
             responseMessageGenerator(response);
         }
 
-        if (response.event_code === "sms_request.info.1" && response.sms_mod === 0) {
+        if (response.portal_code === "sms_request.info.1" && response.sms_mod === 0) {
 
             $("#mac-register-div").hide();
             $('#sms-request-form').hide();
@@ -402,7 +402,7 @@ $(document).ready(function(){
             redirectURL();
         }
 
-        if (response.event_code === "sms_request.info.1" && response.sms_mod === 1) {
+        if (response.portal_code === "sms_request.info.1" && response.sms_mod === 1) {
 
             // show SMS_VALIDATION form
             $("#warn").hide();
@@ -420,19 +420,19 @@ $(document).ready(function(){
             $("#sms-request-form-result").html(response.message);
         }
 
-        if (response.event_code === "sms_request.warn.3" && response.sms_mod === 1) {
+        if (response.portal_code === "sms_request.warn.3" && response.sms_mod === 1) {
 
             active_sms_code = true;
             $('#sms-request-form-result').html("");
             responseMessageGenerator(response);
         }
 
-        if (response.event_code === "sms_request.error.1" && response.sms_mod === 1) {
+        if (response.portal_code === "sms_request.error.1" && response.sms_mod === 1) {
 
             responseMessageGenerator(response);
         }
 
-        if (response.event_code === "sms_request.error.2" && response.sms_mod === 1) {
+        if (response.portal_code === "sms_request.error.2" && response.sms_mod === 1) {
 
             responseMessageGenerator(response);
         }
@@ -445,7 +445,7 @@ $(document).ready(function(){
     function smsValidatePOSTDone(response) {
         debug("sms_validate_form_post_DONE", response);
 
-        if (response.event_code === "sms_validate.warn.1" || response.event_code === "sms_validate.warn.2") {
+        if (response.portal_code === "sms_validate.warn.1" || response.portal_code === "sms_validate.warn.2") {
 
             $('#mac-register-div').hide();
             $('#sms-request-form').hide();
@@ -453,7 +453,7 @@ $(document).ready(function(){
             responseMessageGenerator(response);
         }
 
-        if (response.event_code === "sms_validate.warn.3") {
+        if (response.portal_code === "sms_validate.warn.3") {
 
             $('#mac-register-div').hide();
             $("#sms-validation-div").show(); //
@@ -461,7 +461,7 @@ $(document).ready(function(){
             responseMessageGenerator(response);
         }
 
-        if (response.event_code === "sms_validate.warn.4") {
+        if (response.portal_code === "sms_validate.warn.4") {
 
             $("#mac-register-div").hide();
             $("#sms-validation-div").show(); //
@@ -470,7 +470,7 @@ $(document).ready(function(){
 
         }
 
-        if (response.event_code === "sms_validate.error.1") {
+        if (response.portal_code === "sms_validate.error.1") {
 
             $("#mac-register-div").hide();
             $("#sms-validation-div").show(); //
@@ -480,7 +480,7 @@ $(document).ready(function(){
 
         }
 
-        if (response.event_code === "sms_validate.info.1") {
+        if (response.portal_code === "sms_validate.info.1") {
 
             $("#mac-register-div").hide();
             $("#sms-validation-div").hide(); //
@@ -490,7 +490,7 @@ $(document).ready(function(){
             redirectURL();
         }
 
-        if (response.event_code === "sms_validate.error.1") {
+        if (response.portal_code === "sms_validate.error.1") {
 
             $("#mac-register-div").hide();
             $("#sms-validation-div").show(); //
