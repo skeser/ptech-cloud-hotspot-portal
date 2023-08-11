@@ -408,10 +408,23 @@ $(document).ready(function(){
             responseMessageGenerator(response);
         }
 
+        if (response.portal_code === "code.info.2") {
 
+            $('#code-div').hide();
+            $('#mac-register-div').hide()
 
+            setCellPhoneInputText(response.phone);
+            $('#sms-validation-div').show();
 
+            responseMessageGenerator(response);
+        }
 
+        if (response.portal_code === "code.info.3") {
+
+            $('#code-div').hide();
+            responseMessageGenerator(response);
+            redirectURL();
+        }
     }
 
     // 3- MAC REGISTER FORM RESPONSE FUNCTIONS-------------------------------------------------------------------------------
