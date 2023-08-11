@@ -57,12 +57,36 @@ $(document).ready(function(){
         url: TENANT_SERVICE_URL + "api/v1/router",
         data: router_post_data
     }).done(function (response) {
-        registerDone(response)
+        routerDone(response)
     })
         .fail(function (xhr, status, error) {
             debugFail("router_FAIL : ", xhr, status, error);
             handlingPostFail("err : service unavailable (router service fail)");
         });
+
+    // X-POST:#code-form -----------------------------------------------------------------------------------
+    $("#code-form").on("submit", function (event) {
+
+        event.preventDefault();
+
+        let code_data = {
+            code: $("#code").val(),
+            mac: $("#mac_code").val(),
+            ip: $("#ip_code").val(),
+        };
+
+        $.ajax({
+            url: TENANT_SERVICE_URL + "api/v1/cod",
+            type: "POST",
+            data: code_data
+        }).done(function (response) {
+            codeFormPOSTDone(response)
+        })
+            .fail(function (xhr, status, error) {
+                debugFail("code_form_POST_RESPONSE_FAIL : ", xhr, status, error);
+                handlingPostFail("err : service unavailable (code service fail)");
+            });
+    });
 
     // 3-POST:#mac-register-form -----------------------------------------------------------------------------------
     $("#mac-register-form").on("submit", function (event) {
@@ -151,9 +175,9 @@ $(document).ready(function(){
 
     function init() {
 
-
         $('#sms-validation-div').hide();
         $('#mac-register-div').hide();
+        $('#code-div').hide();
 
         $('#info').hide();
         $('#warn').hide();
@@ -176,8 +200,16 @@ $(document).ready(function(){
         // title
         document.title = FORM_TEXT.mac_login_page.title;
 
-        //register_form
+        // code_form
+        $('#code_form_info').text(FORM_TEXT.mac_login_page.code_form.info);
 
+        $('#code_label').text(FORM_TEXT.mac_login_page.code_form.code_label);
+        $('#code').attr('placeholder', FORM_TEXT.mac_login_page.code_form.code_placeholder);
+
+        $('#code-form_submit_button').text(FORM_TEXT.mac_login_page.code_form.button_text);
+
+
+        //register_form
         $('#tenant_name').text(FORM_TEXT.mac_login_page.register_form.tenant_name);
         $('#register_form_info').text(FORM_TEXT.mac_login_page.register_form.info);
 
@@ -299,14 +331,20 @@ $(document).ready(function(){
 
         if (response.portal_code === "ping.error.1") {
             $("#mac-register-div").hide();
+            $("#code-div").hide();
 
             responseMessageGenerator(response);
         }
     }
 
-    // 2- MAC check service -------------------------------------------------------------------------------------
-    function registerDone(response) {
+    // 2- ROUTER service -------------------------------------------------------------------------------------
+    function routerDone(response) {
         debug("router service :", response);
+
+        if (response.portal_code === "router.warn.7") {
+            $('#code-div').show();
+            //responseMessageGenerator(response);
+        }
 
         if (response.portal_code === "router.warn.3" ||
             response.portal_code === "router.warn.2" ||
@@ -339,6 +377,41 @@ $(document).ready(function(){
         if (response.portal_code === "router.error.1") {
             responseMessageGenerator(response);
         }
+    }
+
+    // X- CODE FORM RESPONSE FUNCTIONS-------------------------------------------------------------------------------
+    function codeFormPOSTDone(response) {
+        debug("code_form_response : ", response);
+
+        if (response.portal_code === "code.error.1") {
+
+            $('#code-div').hide();
+            responseMessageGenerator(response);
+        }
+
+        if (response.portal_code === "code.warn.1") {
+
+            $('#code-div').hide();
+            responseMessageGenerator(response);
+        }
+
+        if (response.portal_code === "code.warn.2") {
+
+            responseMessageGenerator(response);
+        }
+
+        if (response.portal_code === "code.info.1") {
+
+            $('#code-div').hide();
+            $('#mac-register-div').show();
+
+            responseMessageGenerator(response);
+        }
+
+
+
+
+
     }
 
     // 3- MAC REGISTER FORM RESPONSE FUNCTIONS-------------------------------------------------------------------------------
