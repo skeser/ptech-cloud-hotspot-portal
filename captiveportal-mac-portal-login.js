@@ -94,9 +94,8 @@ $(document).ready(function(){
         event.preventDefault();
 
         let mac_user_data = {
-            cell_phone: $("#cell_phone").val(),
-            firstName: $("#firstName").val(),
-            lastName: $("#lastName").val(),
+            phone: $("#cell_phone").val(),
+            person: $("#person").val(),
             email: $("#email").val(),
             mac: $("#mac_mac_register").val(),
             ip: $("#ip_mac_register").val(),
@@ -125,7 +124,7 @@ $(document).ready(function(){
         active_sms_code = true;
 
         let smsRequestData = {
-            cell_phone: $("#cell_phone_sms_request").val(),
+            phone: $("#cell_phone_sms_request").val(),
             mac: $("#mac_sms_request").val(),
             ip: $("#ip_sms_request").val(),
         };
@@ -151,8 +150,7 @@ $(document).ready(function(){
         event.preventDefault();
 
         let smsValidateData = {
-            cell_phone_verification_code: $("#cell_phone_verification_code").val(),
-            cell_phone_validation: cell_phone,
+            phone_verification_code: $("#cell_phone_verification_code").val(),
             mac: $("#mac_sms_validation_code").val(),
             ip: $("#ip_sms_validation_code").val(),
         };
@@ -216,14 +214,12 @@ $(document).ready(function(){
         $('#cell_phone_label').text(FORM_TEXT.mac_login_page.register_form.cell_phone_label);
         $('#cell_phone_country_code').text(FORM_TEXT.mac_login_page.register_form.cell_phone_country_code);
 
-        $('#name_label').text(FORM_TEXT.mac_login_page.register_form.name_label);
-        $('#firstName').attr('placeholder', FORM_TEXT.mac_login_page.register_form.name_placehodler);
+        $('#person_label').text(FORM_TEXT.mac_login_page.register_form.person_label);
+        $('#person').attr('placeholder', FORM_TEXT.mac_login_page.register_form.person_placeholder);
 
-        $('#last_name_label').text(FORM_TEXT.mac_login_page.register_form.last_name_label);
-        $('#lastName').attr('placeholder', FORM_TEXT.mac_login_page.register_form.lastname_placehodler);
 
         $('#email_label').text(FORM_TEXT.mac_login_page.register_form.email_label);
-        $('#email').attr('placeholder', FORM_TEXT.mac_login_page.register_form.email_placehodler);
+        $('#email').attr('placeholder', FORM_TEXT.mac_login_page.register_form.email_placeholder);
 
         $('#mac-register-form_submit_button').text(FORM_TEXT.mac_login_page.register_form.button_text);
 
@@ -265,6 +261,7 @@ $(document).ready(function(){
     function handlingPostFail(message) {
         $('#mac-register-div').hide();
         $('#sms-validation-div').hide();
+        $('#code-div').hide();
 
         $('#info').hide();
         $('#warn').hide();
