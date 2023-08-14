@@ -366,6 +366,7 @@ $(document).ready(function(){
         if (response.portal_code === "router.warn.5") {
 
             setCellPhoneInputText(response.phone);
+
             $('#sms-validation-div').show();
 
             responseMessageGenerator(response);
@@ -452,6 +453,25 @@ $(document).ready(function(){
             $('#sms-validation-div').show();
 
             responseMessageGenerator(response);
+        }
+        // send_sms mode true , direct send sms !!
+        if (response.portal_code === "sms_request.info.1" && response.sms_mod === 1) {
+
+            $("#mac-register-div").hide();
+
+            $("#sms_request_button_submit").hide();
+            $("#sms-validation-div").show(); //
+
+            // show SMS_VALIDATION form
+            //$("#warn").hide();
+            $("#sms-validation-form-result").html("");
+
+            startCountdown();
+
+            setCellPhoneInputText(response.phone);
+            $("#cell_phone_validation").attr("value", response.phone);
+
+            $("#sms-request-form-result").html(response.message);
         }
 
         if (response.portal_code === "register.error.1") {
