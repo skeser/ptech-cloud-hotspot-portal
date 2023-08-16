@@ -2,6 +2,10 @@
 //$(function () {
 $(document).ready(function(){
 
+    let API_KEY = "162a93f8d95d3f7311af5b6af212901a";
+    //let ZONE = $("#zone").val();/
+    let ZONE = 'captive_portal_ptech_cloud_hotspot_dev'; // for test
+
     let FORM_TEXT = {};
 
     init();
@@ -50,7 +54,9 @@ $(document).ready(function(){
     // 2-) POST:router ------------------------------------------------------------------------------------
     let router_post_data = {
         mac: $("#mac_mac_check").val(),
-        ip: $("#ip_mac_check").val()
+        ip: $("#ip_mac_check").val(),
+        API_KEY: API_KEY,
+        ZONE : ZONE,
     };
     $.ajax({
         type: "POST",
@@ -73,6 +79,8 @@ $(document).ready(function(){
             code: $("#code").val(),
             mac: $("#mac_code").val(),
             ip: $("#ip_code").val(),
+            API_KEY: API_KEY,
+            ZONE : ZONE,
         };
 
         $.ajax({
@@ -99,6 +107,8 @@ $(document).ready(function(){
             email: $("#email").val(),
             mac: $("#mac_mac_register").val(),
             ip: $("#ip_mac_register").val(),
+            API_KEY: API_KEY,
+            ZONE : ZONE,
         };
 
         $.ajax({
@@ -127,6 +137,8 @@ $(document).ready(function(){
             phone: $("#cell_phone_sms_request").val(),
             mac: $("#mac_sms_request").val(),
             ip: $("#ip_sms_request").val(),
+            API_KEY: API_KEY,
+            ZONE : ZONE,
         };
 
         $.ajax({
@@ -153,6 +165,8 @@ $(document).ready(function(){
             phone_verification_code: $("#cell_phone_verification_code").val(),
             mac: $("#mac_sms_validation_code").val(),
             ip: $("#ip_sms_validation_code").val(),
+            API_KEY: API_KEY,
+            ZONE : ZONE,
         };
 
         $.ajax({
@@ -286,6 +300,7 @@ $(document).ready(function(){
         console.log("+message : " + response.message);
         console.log("+phone : " + response.phone);
         console.log("+sms_mod : " + response.sms_mod);
+        console.log("+API_KEY : " + API_KEY);
         console.log("END : DEBUG -------------------------------------------");
     }
 
