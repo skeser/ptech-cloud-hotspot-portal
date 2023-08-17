@@ -587,6 +587,16 @@ $(document).ready(function(){
             $("#sms-validation-form-result").html(response.message);
 
         }
+        if (response.portal_code === "sms_validate.error.3") {
+
+            $("#mac-register-div").hide();
+            $("#sms-validation-div").hide(); //
+
+            responseMessageGenerator(response);
+
+            //$("#sms-validation-form-result").html(response.message);
+
+        }
 
         if (response.portal_code === "sms_validate.error.1") {
 
