@@ -40,14 +40,9 @@
                         <input type="text" name="code" id="code" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" maxlength="4" placeholder="" required="">
                     </div>
 
-                    <!-- hidden things:1 - must be for DEV and production
+                    <!-- hidden things:1 - must be for DEV and production -->
                     <input type="hidden" id="mac_code" name="mac_code" value="#CLIENT_MAC#">
                     <input type="hidden" id="ip_code" name="ip_code" value="#CLIENT_IP#">
-                    -->
-
-                    <!-- test for karakacan -->
-                    <input type="hidden" id="mac_code" name="mac_code" value="00:00:00:00:00:05">
-                    <input type="hidden" id="ip_code" name="ip_code" value="10.1.1.5">
 
                     <button id="code-form_submit_button" type="submit"
                             class="w-full text-white bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:bg-gray-700 font-bold rounded-lg text-base px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-gray-700 dark:focus:ring-primary-800">
@@ -72,15 +67,9 @@
                         </div>
                     </div>
 
-                    <!-- hidden things:2 - must be for DEV and production
+                    <!-- hidden things:2 - must be for DEV and production -->
                     <input type="hidden" id="mac_phone_check" name="mac_phone_check" value="#CLIENT_MAC#">
                     <input type="hidden" id="ip_phone_check" name="ip_phone_check" value="#CLIENT_IP#">
-                    -->
-
-                    <!-- test for karakacan -->
-                    <input type="hidden" id="mac_phone_check" name="mac_phone_check" value="00:00:00:00:00:05">
-                    <input type="hidden" id="ip_phone_check" name="ip_phone_check" value="10.1.1.5">
-
 
                     <button id="phone-check-form_submit_button" type="submit"
                             class="w-full text-white bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:bg-gray-700 font-bold rounded-lg text-base px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-gray-700 dark:focus:ring-primary-800">
@@ -117,17 +106,9 @@
                         <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
                     </div>
 
-                    <!-- hidden things:2 - must be for DEV and production
+                    <!-- hidden things:3 - must be for DEV and production -->
                     <input type="hidden" id="mac_mac_register" name="mac_mac_register" value="#CLIENT_MAC#">
                     <input type="hidden" id="ip_mac_register" name="ip_mac_register" value="#CLIENT_IP#">
-                    -->
-
-
-                    <!-- test for karakacan -->
-                    <input type="hidden" id="mac_mac_register" name="mac_mac_register" value="00:00:00:00:00:05">
-                    <input type="hidden" id="ip_mac_register" name="ip_mac_register" value="10.1.1.5">
-
-
 
                     <button id="mac-register-form_submit_button" type="submit"
                             class="w-full text-white bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:bg-gray-700 font-bold rounded-lg text-base px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-gray-700 dark:focus:ring-primary-800">
@@ -157,17 +138,9 @@
                         </div>
                     </div>
 
-                    <!-- hidden things:3 - must be for DEV and production
+                    <!-- hidden things:4 - must be for DEV and production -->
                     <input type="hidden" id="mac_sms_request" name="mac_sms_request" value="#CLIENT_MAC#">
                     <input type="hidden" id="ip_sms_request" name="ip_sms_request" value="#CLIENT_IP#">
-                    -->
-
-
-                    <!-- test env for karakacan -->
-                    <input type="hidden" id="mac_sms_request" name="mac_sms_request" value="00:00:00:00:00:05">
-                    <input type="hidden" id="ip_sms_request" name="ip_sms_request" value="10.1.1.5">
-
-
 
                     <button id="sms_request_button_submit" type="submit"
                             class="w-full text-white bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:bg-gray-700 font-bold rounded-lg text-base px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-gray-700 dark:focus:ring-primary-800">
@@ -192,36 +165,21 @@
                         </div>
                     </div>
 
-                    <!-- hidden things:4 - must be for DEV and production
+                    <!-- hidden things:5 - must be for DEV and production -->
                     <input type="hidden" id="mac_sms_validation_code" name="mac_sms_validation_code" value="#CLIENT_MAC#">
                     <input type="hidden" id="ip_sms_validation_code" name="ip_sms_validation_code" value="#CLIENT_IP#">
-                    -->
-
-                    <!-- test env -->
-                    <input type="hidden" id="mac_sms_validation_code" name="mac_sms_validation_code" value="00:00:00:00:00:05">
-                    <input type="hidden" id="ip_sms_validation_code" name="ip_sms_validation_code" value="10.1.1.5">
-
-
 
                     <button id="sms_validate_button_submit" type="submit"
                             class="w-full text-white bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:bg-gray-700 font-bold rounded-lg text-base px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-gray-700 dark:focus:ring-primary-800">
                         VALIDATE
                     </button>
-                    <!--  <p class="text-sm font-light text-right text-gray-500 dark:text-gray-400">Mac: ip:</p>    -->
+
                 </form>
             </div>
 
-            <!-- hidden things:5 : MAC Check - must be for DEV and production
+            <!-- hidden things:6 : ROTUER (MAC Check) - must be for DEV and production -->
             <input type="hidden" id="mac_mac_check" name="mac_mac_check" value="#CLIENT_MAC#">
             <input type="hidden" id="ip_mac_check" name="ip_mac_check" value="#CLIENT_IP#">
-            -->
-
-
-            <!-- test env -->
-            <input type="hidden" id="mac_mac_check" name="mac_mac_check" value="00:00:00:00:00:05">
-            <input type="hidden" id="ip_mac_check" name="ip_mac_check" value="10.1.1.5">
-
-
 
             <!-- Captive Portal Hiddens : PRODUCTION-->
             <input type="hidden" id="portal_action" name="portal_action"  value="#PORTAL_ACTION#">

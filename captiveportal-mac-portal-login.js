@@ -2,9 +2,13 @@
 //$(function () {
 $(document).ready(function(){
 
+    let test_mac = '00:00:00:00:00:06';
+    let test_ip = '10.1.1.5';
+    set_test_env();
+
     let API_KEY = "162a93f8d95d3f7311af5b6af212901a";
-    //let ZONE = $("#zone").val();/
-    let ZONE = 'captive_portal_ptech_cloud_hotspot_dev'; // for test
+    let ZONE = $("#zone").val();
+
 
     let FORM_TEXT = {};
 
@@ -14,7 +18,6 @@ $(document).ready(function(){
 
     let TENANT_SERVICE_URL = "http://ptech-cloud-hotspot-service.local/";
 
-    let cell_phone = "undefined";
 
 
     let active_sms_code = false;
@@ -213,6 +216,35 @@ $(document).ready(function(){
 
     // functions : begin--------------------------------------------------------------------------------------------
 
+    function set_test_env() {
+        // for test on karakacan
+        let ZONE = 'captive_portal_ptech_cloud_hotspot_dev'; // for test
+
+        // 1:code service
+        $('#mac_code').val(test_mac);
+        $('#ip_code').val(test_ip);
+
+        // 2:phone service
+        $('#mac_phone_check').val(test_mac);
+        $('#ip_phone_check').val(test_ip);
+
+        // 3:register service
+        $('#mac_mac_register').val(test_mac);
+        $('#ip_mac_register').val(test_ip);
+
+        // 4: sms_request
+        $('#mac_sms_request').val(test_mac);
+        $('#ip_sms_request').val(test_ip);
+
+        // 5: sms_validation
+        $('#mac_sms_validation_code').val(test_mac);
+        $('#ip_sms_validation_code').val(test_ip);
+
+        // 6: router service
+        $('#mac_mac_check').val(test_mac);
+        $('#ip_mac_check').val(test_ip);
+    }
+
     function init() {
 
         $('#sms-validation-div').hide();
@@ -220,21 +252,9 @@ $(document).ready(function(){
         $('#code-div').hide();
         $('#phone-check-div').hide();
 
-
         $('#info').hide();
         $('#warn').hide();
         $('#error').hide();
-
-        /*
-                $('#mac-register-div').show();
-        $('#sms-validation-div').show();
-        $('#mac-register-div').show();
-
-        $('#info').show();
-        $('#warn').show();
-        $('#error').show();
-
-         */
 
     }
 
@@ -344,6 +364,8 @@ $(document).ready(function(){
         console.log("+phone : " + response.phone);
         console.log("+sms_mod : " + response.sms_mod);
         console.log("+API_KEY : " + API_KEY);
+        console.log("+test_mac: " + test_mac );
+        console.log("+test_ip: " + test_ip );
         console.log("END : DEBUG -------------------------------------------");
     }
 
@@ -487,35 +509,7 @@ $(document).ready(function(){
     }
 
     // X- PHONE CHECK FORM RESPONSE FUNCTIONS-------------------------------------------------------------------------------
-    function phoneCheckFormPOSTDone(response) {
-        debug("phone_check_form_response : ", response);
 
-        if (response.portal_code === "phone.warn.1") {
-
-            $('#phone-check-div').hide();
-            responseMessageGenerator(response);
-        }else {
-            if (response.portal_code === "phone.info.1") {
-
-                $('#phone-check-div').hide();
-
-                setCellPhoneInputText(response.phone);
-
-                //$('#cell_phone').val(response.phone);
-                $('#mac-register-div').show();
-
-                responseMessageGenerator(response);
-            }else {
-
-                $('#phone-check-div').hide();
-                registerFormPOSTDone(response);
-            }
-
-        }
-
-
-
-    }
 
     // 3- MAC REGISTER FORM RESPONSE FUNCTIONS-------------------------------------------------------------------------------
     function registerFormPOSTDone(response) {
