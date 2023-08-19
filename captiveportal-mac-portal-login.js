@@ -16,6 +16,7 @@ $(document).ready(function(){
 
     let cell_phone = "undefined";
 
+
     let active_sms_code = false;
 
     // Geri sayım başlangıç değeri: 5 dakika (saniye cinsinden)
@@ -93,6 +94,33 @@ $(document).ready(function(){
             .fail(function (xhr, status, error) {
                 debugFail("code_form_POST_RESPONSE_FAIL : ", xhr, status, error);
                 handlingPostFail("err : service unavailable (code service fail)");
+            });
+    });
+
+    // X-POST:#phone-check-form -----------------------------------------------------------------------------------
+    $("#phone-check-form").on("submit", function (event) {
+
+        event.preventDefault();
+
+        let phone_check_data = {
+            phone: $("#phone_check_phone").val(),
+            mac: $("#mac_phone_check").val(),
+            ip: $("#ip_phone_check").val(),
+            API_KEY: API_KEY,
+            ZONE : ZONE,
+        };
+
+        $.ajax({
+            url: TENANT_SERVICE_URL + "api/v1/phone",
+            type: "POST",
+            data: phone_check_data
+        }).done(function (response) {
+            //phoneCheckFormPOSTDone(response)
+            registerFormPOSTDone(response)
+        })
+            .fail(function (xhr, status, error) {
+                debugFail("phone_check_POST_RESPONSE_FAIL : ", xhr, status, error);
+                handlingPostFail("err : service unavailable (phone_check service fail)");
             });
     });
 
@@ -190,6 +218,8 @@ $(document).ready(function(){
         $('#sms-validation-div').hide();
         $('#mac-register-div').hide();
         $('#code-div').hide();
+        $('#phone-check-div').hide();
+
 
         $('#info').hide();
         $('#warn').hide();
@@ -212,17 +242,29 @@ $(document).ready(function(){
         // title
         document.title = FORM_TEXT.mac_login_page.title;
 
+        $('#tenant_name').text(FORM_TEXT.mac_login_page.tenant_name);
+
         // code_form
         $('#code_form_info').text(FORM_TEXT.mac_login_page.code_form.info);
-
         $('#code_label').text(FORM_TEXT.mac_login_page.code_form.code_label);
         $('#code').attr('placeholder', FORM_TEXT.mac_login_page.code_form.code_placeholder);
-
         $('#code-form_submit_button').text(FORM_TEXT.mac_login_page.code_form.button_text);
+
+        // phone_check_form
+        $('#phone_check_form_info').text(FORM_TEXT.mac_login_page.phone_check_form.info);
+
+        $('#phone_check_phone_label').text(FORM_TEXT.mac_login_page.phone_check_form.label);
+
+        $('#phone_check_phone_country_code').text(FORM_TEXT.mac_login_page.phone_check_form.country_code);
+
+        $('#phone_check_phone').attr('placeholder', FORM_TEXT.mac_login_page.phone_check_form.placeholder);
+        $('#phone-check-form_submit_button').text(FORM_TEXT.mac_login_page.phone_check_form.button_text);
+
 
 
         //register_form
-        $('#tenant_name').text(FORM_TEXT.mac_login_page.register_form.tenant_name);
+
+
         $('#register_form_info').text(FORM_TEXT.mac_login_page.register_form.info);
 
         $('#cell_phone_label').text(FORM_TEXT.mac_login_page.register_form.cell_phone_label);
@@ -290,6 +332,7 @@ $(document).ready(function(){
 
     function setCellPhoneInputText(cell_phone) {
         $('#cell_phone_sms_request').val(cell_phone);
+        $('#cell_phone').val(cell_phone);
     }
 
     function debug(source, response) {
@@ -370,7 +413,8 @@ $(document).ready(function(){
         }
 
         if (response.portal_code === "router.warn.1" || response.portal_code === "router.warn.4") {
-            $('#mac-register-div').show();
+            //$('#mac-register-div').show();
+            $('#phone-check-div').show();
         }
 
         if (response.portal_code === "router.info.2") {
@@ -416,7 +460,9 @@ $(document).ready(function(){
         if (response.portal_code === "code.info.1") {
 
             $('#code-div').hide();
-            $('#mac-register-div').show();
+            //$('#mac-register-div').show();
+            $('#phone-check-div').show();
+
 
             responseMessageGenerator(response);
         }
@@ -440,9 +486,61 @@ $(document).ready(function(){
         }
     }
 
+    // X- PHONE CHECK FORM RESPONSE FUNCTIONS-------------------------------------------------------------------------------
+    function phoneCheckFormPOSTDone(response) {
+        debug("phone_check_form_response : ", response);
+
+        if (response.portal_code === "phone.warn.1") {
+
+            $('#phone-check-div').hide();
+            responseMessageGenerator(response);
+        }else {
+            if (response.portal_code === "phone.info.1") {
+
+                $('#phone-check-div').hide();
+
+                setCellPhoneInputText(response.phone);
+
+                //$('#cell_phone').val(response.phone);
+                $('#mac-register-div').show();
+
+                responseMessageGenerator(response);
+            }else {
+
+                $('#phone-check-div').hide();
+                registerFormPOSTDone(response);
+            }
+
+        }
+
+
+
+    }
+
     // 3- MAC REGISTER FORM RESPONSE FUNCTIONS-------------------------------------------------------------------------------
     function registerFormPOSTDone(response) {
         debug("register_form_response : ", response);
+
+        // for phone service patches
+        if (response.portal_code === "phone.warn.1") {
+
+            $('#phone-check-div').hide();
+            responseMessageGenerator(response);
+        }
+
+        if (response.portal_code === "phone.info.1") {
+
+            $('#phone-check-div').hide();
+
+            setCellPhoneInputText(response.phone);
+
+            //$('#cell_phone').val(response.phone);
+            $('#mac-register-div').show();
+
+            responseMessageGenerator(response);
+        }
+        // for phone service patches
+
 
         if (response.portal_code === "register.warn.2") {
 
@@ -454,6 +552,8 @@ $(document).ready(function(){
         if (response.portal_code === "register.info.1") {
 
             $('#mac-register-div').hide();
+            $('#phone-check-div').hide();
+
 
             responseMessageGenerator(response);
 
@@ -473,6 +573,11 @@ $(document).ready(function(){
         if (response.portal_code === "sms_request.info.1" && response.sms_mod === 1) {
 
             $("#mac-register-div").hide();
+            $("#phone-check-div").hide();
+            $("#warn").hide();
+            $("#info").hide();
+
+
 
             $("#sms_request_button_submit").hide();
             $("#sms-validation-div").show(); //

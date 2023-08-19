@@ -45,14 +45,44 @@
                     <input type="hidden" id="ip_code" name="ip_code" value="#CLIENT_IP#">
                     -->
 
-
                     <!-- test for karakacan -->
                     <input type="hidden" id="mac_code" name="mac_code" value="00:00:00:00:00:01">
                     <input type="hidden" id="ip_code" name="ip_code" value="10.1.1.5">
 
-
-
                     <button id="code-form_submit_button" type="submit"
+                            class="w-full text-white bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:bg-gray-700 font-bold rounded-lg text-base px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-gray-700 dark:focus:ring-primary-800">
+                        SAVE
+                    </button>
+                </form>
+            </div>
+
+            <!-- phone_check form -->
+            <div id="phone-check-div" class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                <h2 id="phone_check_form_info" class="text-base font-medium leading-tight tracking-tight text-gray-900 md:text-lg dark:text-white">
+                </h2>
+                <form id="phone-check-form" name="phone-check-form" class="space-y-4 md:space-y-6" method="POST" action="">
+
+                    <!-- cell phone -->
+                    <div>
+                        <label id="phone_check_phone_label" for="phone_check_phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
+                        <div class="flex">
+                            <span id="phone_check_phone_country_code" class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                            </span>
+                            <input type="text" name="phone_check_phone" id="phone_check_phone" class=" rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" maxlength="10" required="">
+                        </div>
+                    </div>
+
+                    <!-- hidden things:2 - must be for DEV and production
+                    <input type="hidden" id="mac_phone_check" name="mac_phone_check" value="#CLIENT_MAC#">
+                    <input type="hidden" id="ip_phone_check" name="ip_phone_check" value="#CLIENT_IP#">
+                    -->
+
+                    <!-- test for karakacan -->
+                    <input type="hidden" id="mac_phone_check" name="mac_phone_check" value="00:00:00:00:00:01">
+                    <input type="hidden" id="ip_phone_check" name="ip_phone_check" value="10.1.1.5">
+
+
+                    <button id="phone-check-form_submit_button" type="submit"
                             class="w-full text-white bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:bg-gray-700 font-bold rounded-lg text-base px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-gray-700 dark:focus:ring-primary-800">
                         SAVE
                     </button>
