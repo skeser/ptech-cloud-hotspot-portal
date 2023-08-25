@@ -2,13 +2,13 @@
 //$(function () {
 $(document).ready(function(){
 
-    let test_mac = '00:00:00:00:00:06';
-    let test_ip = '10.1.1.5';
+    let test_mac = '00:00:00:00:00:45';
+    let test_ip = '10.1.1.45';
     set_test_env();
 
     let API_KEY = "162a93f8d95d3f7311af5b6af212901a";
-    let ZONE = $("#zone").val();
-
+    //let ZONE = $("#zone").val();
+    let ZONE = 'captive_portal_ptech_cloud_hotspot_dev'; // for test
 
     let FORM_TEXT = {};
 
@@ -17,8 +17,6 @@ $(document).ready(function(){
     let PORTAL_ACTION_URL = $("#portal_action").val();
 
     let TENANT_SERVICE_URL = "http://ptech-cloud-hotspot-service.local/";
-
-
 
     let active_sms_code = false;
 
@@ -218,7 +216,7 @@ $(document).ready(function(){
 
     function set_test_env() {
         // for test on karakacan
-        let ZONE = 'captive_portal_ptech_cloud_hotspot_dev'; // for test
+
 
         // 1:code service
         $('#mac_code').val(test_mac);
@@ -364,8 +362,8 @@ $(document).ready(function(){
         console.log("+phone : " + response.phone);
         console.log("+sms_mod : " + response.sms_mod);
         console.log("+API_KEY : " + API_KEY);
-        console.log("+test_mac: " + test_mac );
-        console.log("+test_ip: " + test_ip );
+        //console.log("+test_mac: " + test_mac );
+        //console.log("+test_ip: " + test_ip );
         console.log("END : DEBUG -------------------------------------------");
     }
 
