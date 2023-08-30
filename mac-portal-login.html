@@ -5,24 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="captiveportal-tailwindcss-3.3.1.css"></script>
     <script src="captiveportal-tailwind.config.js"></script>
-
     <script src="captiveportal-jquery-3.6.4.min.js"></script>
 
     <script src="captiveportal-mac-portal-login.js"></script>
-
-    <!--
-     * Branch Senkronizasyonu;
-     * service : dev
-     * portal  : dev
-    -->
-
     <title></title>
 </head>
 <body>
 <section class="bg-gray-50 dark:bg-gray-900">
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-            <img class="w-8 h-8 mr-2" src="captiveportal-logo_placeholder_40x40.png" alt="Teamworking By TechNexus Logo">
+            <img class="w-8 h-8 mr-2" src="captiveportal-logo_placeholder_40x40.png" alt="pfsense cloud hotspot from poyrazteknoloji.com">
             <div id="tenant_name"> </div>
         </a>
         <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -37,7 +29,7 @@
                     <!-- code -->
                     <div>
                         <label id="code_label" for="code" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
-                        <input type="text" name="code" id="code" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" maxlength="4" placeholder="" required="">
+                        <input type="text" name="code" id="code" class="font-bold bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" maxlength="4" placeholder="" required="">
                     </div>
 
                     <!-- hidden things:1 - must be for DEV and production -->
@@ -63,7 +55,7 @@
                         <div class="flex">
                             <span id="phone_check_phone_country_code" class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
                             </span>
-                            <input type="text" name="phone_check_phone" id="phone_check_phone" class=" rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" maxlength="10" required="">
+                            <input type="text" name="phone_check_phone" id="phone_check_phone" class="font-mono font-bold rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" maxlength="10" required="">
                         </div>
                     </div>
 
@@ -90,20 +82,20 @@
                         <div class="flex">
                             <span id="cell_phone_country_code" class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
                             </span>
-                            <input type="text" name="cell_phone" id="cell_phone" class=" rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" maxlength="10" required="">
+                            <input type="text" name="cell_phone" id="cell_phone" class="font-mono font-bold rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" maxlength="10" required="">
                         </div>
                     </div>
 
                     <!-- person -->
                     <div>
                         <label id="person_label" for="person" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Person</label>
-                        <input type="text" name="person" id="person" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="person name here" required="">
+                        <input type="text" name="person" id="person" class="font-semibold bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="person name here" required="">
                     </div>
 
                     <!-- email -->
                     <div>
                         <label id="email_label" for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                        <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
+                        <input type="email" name="email" id="email" class="font-semibold bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
                     </div>
 
                     <!-- hidden things:3 - must be for DEV and production -->
@@ -126,16 +118,9 @@
 
                 <!-- sms REQUEST form -->
                 <form id="sms-request-form" name="sms-request-form" class="space-y-4 md:space-y-6" method="POST" action="">
-
-                    <div class="grid grid-cols-2 gap-2">
-                        <div>
-                            <label id="sms_request_cell_phone_label" for="cell_phone_sms_request" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cell Phone</label>
-                            <input type="text" id="cell_phone_sms_request" name="cell_phone_sms_request"  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required pattern="[0-9]{10}" maxlength="10">
-                        </div>
-
-                        <!-- response msg -->
-                        <div id="sms-request-form-result" class="pt-8 pl-6">
-                        </div>
+                    <div>
+                        <label id="sms_request_cell_phone_label" for="cell_phone_sms_request" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cell Phone</label>
+                        <input type="text" id="cell_phone_sms_request" name="cell_phone_sms_request"  class="font-semibold bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required pattern="[0-9]{10}" maxlength="10">
                     </div>
 
                     <!-- hidden things:4 - must be for DEV and production -->
@@ -153,16 +138,11 @@
                     <div class="grid grid-flow-col auto-cols-max">
                         <div>
                             <label id="sms_validate_form_info" for="cell_phone_verification_code" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Validation Code</label>
-                            <input type="text" name="cell_phone_verification_code" id="cell_phone_verification_code" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required pattern="[0-9]{6}" maxlength="6">
+                            <input type="text" name="cell_phone_verification_code" id="cell_phone_verification_code" class="font-bold bg-gray-50 border border-gray-300 text-gray-900 text-xl rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required pattern="[0-9]{6}" maxlength="6">
                         </div>
 
                         <!-- response msg -->
-                        <div id="countdown" class="pt-8 pl-6 max-w-min">
-
-                        </div>
-                        <div id="sms-validation-form-result" class="pt-8 pl-4">
-
-                        </div>
+                        <div id="countdown" class="pt-8 pl-6 max-w-min text-lg font-bold font-mono"></div>
                     </div>
 
                     <!-- hidden things:5 - must be for DEV and production -->
@@ -189,15 +169,15 @@
             <input type="hidden" id="ip" name="ip" value="#CLIENT_IP#">
 
             <!-- server response messages : info -->
-            <div id="info" class="p-4 space-y-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+            <div id="info" class="p-4 space-y-4 text-base font-medium text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
             </div>
 
             <!-- server response messages : warn -->
-            <div id="warn" class="p-4 space-y-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300" role="alert">
+            <div id="warn" class="p-4 space-y-4 text-base font-medium text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300" role="alert">
             </div>
 
             <!-- server response messages : error -->
-            <div id="error" class="p-4 space-y-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+            <div id="error" class="p-4 space-y-4 text-base font-medium text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
             </div>
         </div>
     </div>

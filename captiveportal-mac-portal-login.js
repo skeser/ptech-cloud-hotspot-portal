@@ -6,9 +6,11 @@ $(document).ready(function(){
     let test_ip = '10.1.1.45';
     set_test_env();
 
+    let ZONE = 'captive_portal_ptech_cloud_hotspot_dev'; // for test
+
     let API_KEY = "162a93f8d95d3f7311af5b6af212901a";
     //let ZONE = $("#zone").val();
-    let ZONE = 'captive_portal_ptech_cloud_hotspot_dev'; // for test
+
 
     let FORM_TEXT = {};
 
@@ -158,7 +160,9 @@ $(document).ready(function(){
 
         event.preventDefault();
         if (active_sms_code === false){
-            $('#sms-request-form-result').html(FORM_TEXT.mac_login_page.sms_request_form.code_sending);
+            $('#warn').hide();
+            $('#error').hide();
+            $('#info').show().html(FORM_TEXT.mac_login_page.sms_request_form.code_sending);
         }
         active_sms_code = true;
 
@@ -278,11 +282,7 @@ $(document).ready(function(){
         $('#phone_check_phone').attr('placeholder', FORM_TEXT.mac_login_page.phone_check_form.placeholder);
         $('#phone-check-form_submit_button').text(FORM_TEXT.mac_login_page.phone_check_form.button_text);
 
-
-
         //register_form
-
-
         $('#register_form_info').text(FORM_TEXT.mac_login_page.register_form.info);
 
         $('#cell_phone_label').text(FORM_TEXT.mac_login_page.register_form.cell_phone_label);
@@ -298,7 +298,6 @@ $(document).ready(function(){
         $('#mac-register-form_submit_button').text(FORM_TEXT.mac_login_page.register_form.button_text);
 
         //sms_request_form
-
         $('#sms_request_form_info').text(FORM_TEXT.mac_login_page.sms_request_form.info);
         $('#sms_request_cell_phone_label').text(FORM_TEXT.mac_login_page.sms_request_form.cell_phone_label);
 
@@ -395,7 +394,6 @@ $(document).ready(function(){
         } else {
             // Countdown sıfır olduğunda geri sayım sonlandırılır
             //countdownElement.text("Code Expired");
-            //$("#sms-validation-form-result").html("Code Expired");
             location.reload();
         }
     }
@@ -526,7 +524,6 @@ $(document).ready(function(){
 
             setCellPhoneInputText(response.phone);
 
-            //$('#cell_phone').val(response.phone);
             $('#mac-register-div').show();
 
             responseMessageGenerator(response);
@@ -569,21 +566,15 @@ $(document).ready(function(){
             $("#warn").hide();
             $("#info").hide();
 
-
-
             $("#sms_request_button_submit").hide();
             $("#sms-validation-div").show(); //
-
-            // show SMS_VALIDATION form
-            //$("#warn").hide();
-            $("#sms-validation-form-result").html("");
 
             startCountdown();
 
             setCellPhoneInputText(response.phone);
             $("#cell_phone_validation").attr("value", response.phone);
 
-            $("#sms-request-form-result").html(response.message);
+            responseMessageGenerator(response);
         }
 
         if (response.portal_code === "register.error.1") {
@@ -621,7 +612,6 @@ $(document).ready(function(){
 
             // show SMS_VALIDATION form
             $("#warn").hide();
-            $("#sms-validation-form-result").html("");
 
             startCountdown();
 
@@ -632,13 +622,12 @@ $(document).ready(function(){
             $("#mac-register-div").hide();
             $("#sms-validation-div").show(); //
 
-            $("#sms-request-form-result").html(response.message);
+            responseMessageGenerator(response);
         }
 
         if (response.portal_code === "sms_request.warn.3" && response.sms_mod === 1) {
 
             active_sms_code = true;
-            $('#sms-request-form-result').html("");
             responseMessageGenerator(response);
         }
 
@@ -681,7 +670,7 @@ $(document).ready(function(){
             $("#mac-register-div").hide();
             $("#sms-validation-div").show(); //
 
-            $("#sms-validation-form-result").html(response.message);
+            responseMessageGenerator(response);
 
         }
         if (response.portal_code === "sms_validate.error.3") {
@@ -691,8 +680,6 @@ $(document).ready(function(){
 
             responseMessageGenerator(response);
 
-            //$("#sms-validation-form-result").html(response.message);
-
         }
 
         if (response.portal_code === "sms_validate.error.1") {
@@ -700,7 +687,6 @@ $(document).ready(function(){
             $("#mac-register-div").hide();
             $("#sms-validation-div").show(); //
 
-            //$("#sms-validation-form-result").html("response.message");
             responseMessageGenerator(response);
 
         }

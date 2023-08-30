@@ -1,9 +1,8 @@
 <?php
 
 // Hedef URL
-$TENANT_URL  = 'http://ptech-cloud-hotspot-service.local/'; // on KARAKACAN
-$TENANT_URL  = 'http://ptech-service.venus.local/';         // on VENUS
-$TENANT_URL  = 'https://hotspot.poyrazteknoloji.com/';      // on hotspot on CHARON
+$TENANT_URL  = 'https://sb.poyrazteknoloji.com/';
+
 
 $SERVICE_URI = 'api/v1/check-ip';
 
@@ -11,7 +10,7 @@ $url = $TENANT_URL . $SERVICE_URI;
 
 // Gönderilecek veriler
 $postData = array(
-    'API_KEY' => '162a93f8d95d3f7311af5b6af212901a',
+    'API_KEY' => 'G5MIJP5T6LdyGz_r-vkE_CLVRPr8g-MCec75J-4WdD0',
 );
 
 // cURL oturumunu başlatma
