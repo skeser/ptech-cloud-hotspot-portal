@@ -194,6 +194,10 @@ $(document).ready(function(){
 
         event.preventDefault();
 
+        $('#warn').hide();
+        $('#error').hide();
+        $('#info').show().html(FORM_TEXT.mac_login_page.sms_validation_form.validating_code);
+
         let smsValidateData = {
             phone_verification_code: $("#cell_phone_verification_code").val(),
             mac: $("#mac_sms_validation_code").val(),
