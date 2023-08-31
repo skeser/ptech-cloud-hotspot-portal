@@ -2,15 +2,14 @@
 //$(function () {
 $(document).ready(function(){
 
-    let test_mac = '00:00:00:00:00:45';
-    let test_ip = '10.1.1.45';
+    let test_mac = '00:00:00:00:00:32';
+    let test_ip = '10.1.1.32';
     set_test_env();
 
     let ZONE = 'captive_portal_ptech_cloud_hotspot_dev'; // for test
 
     let API_KEY = "162a93f8d95d3f7311af5b6af212901a";
     //let ZONE = $("#zone").val();
-
 
     let FORM_TEXT = {};
 
@@ -131,6 +130,9 @@ $(document).ready(function(){
     $("#mac-register-form").on("submit", function (event) {
 
         event.preventDefault();
+        $('#warn').hide();
+        $('#error').hide();
+        $('#info').show().html(FORM_TEXT.mac_login_page.register_form.registering);
 
         let mac_user_data = {
             phone: $("#cell_phone").val(),
@@ -265,10 +267,11 @@ $(document).ready(function(){
     }
 
     function set_captive_portal_form_text(FORM_TEXT){
-        // title
-        document.title = FORM_TEXT.mac_login_page.title;
 
-        $('#tenant_name').text(FORM_TEXT.mac_login_page.tenant_name);
+        // common
+        document.title = FORM_TEXT.common.title;
+        $('#tenant_name').text(FORM_TEXT.common.tenant_name);
+        $('#page_name').text(FORM_TEXT.common.page_name);
 
         // code_form
         $('#code_form_info').text(FORM_TEXT.mac_login_page.code_form.info);
