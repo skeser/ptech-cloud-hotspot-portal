@@ -2,20 +2,20 @@
 //$(function () {
 $(document).ready(function(){
 
-    let test_mac = '00:00:00:00:00:32';
-    let test_ip = '10.1.1.32';
-    set_test_env();
+    //let test_mac = '00:00:00:00:00:32';
+    //let test_ip = '10.1.1.32';
+    //set_test_env();
 
-    let ZONE = 'captive_portal_ptech_cloud_hotspot_dev'; // for test
+    //let ZONE = 'captive_portal_ptech_cloud_hotspot_dev'; // for test
 
     let API_KEY = "162a93f8d95d3f7311af5b6af212901a";
-    //let ZONE = $("#zone").val();
+    let ZONE = $("#zone").val();
 
     let FORM_TEXT = {};
 
     init();
 
-    let PORTAL_ACTION_URL = $("#portal_action").val();
+    let PORTAL_ACTION_URL = $("#portal_action").val()
 
     let TENANT_SERVICE_URL = "http://ptech-cloud-hotspot-service.local/";
 
@@ -42,6 +42,7 @@ $(document).ready(function(){
         });
 
     // 1-) GET:is-alive --------------------------------------------------------------------------------------------
+    /*
     $.ajax({
         type: "GET",
         url: TENANT_SERVICE_URL + "api/v1/ping",
@@ -53,6 +54,8 @@ $(document).ready(function(){
             debugFail("ping :", xhr, status, error);
             handlingPostFail("err : ping service unavailable (503)");
         });
+
+     */
 
     // 2-) POST:router ------------------------------------------------------------------------------------
     let router_post_data = {
@@ -77,6 +80,8 @@ $(document).ready(function(){
     $("#code-form").on("submit", function (event) {
 
         event.preventDefault();
+        $(this).prop("disabled", true);
+        processRequest(FORM_TEXT.mac_login_page.code_form.code_checking);
 
         let code_data = {
             code: $("#code").val(),
@@ -91,6 +96,7 @@ $(document).ready(function(){
             type: "POST",
             data: code_data
         }).done(function (response) {
+            $("#code-form").prop("disabled", false);
             codeFormPOSTDone(response)
         })
             .fail(function (xhr, status, error) {
@@ -103,6 +109,8 @@ $(document).ready(function(){
     $("#phone-check-form").on("submit", function (event) {
 
         event.preventDefault();
+        $(this).prop("disabled", true);
+        processRequest(FORM_TEXT.mac_login_page.phone_check_form.phone_checking);
 
         let phone_check_data = {
             phone: $("#phone_check_phone").val(),
@@ -117,7 +125,7 @@ $(document).ready(function(){
             type: "POST",
             data: phone_check_data
         }).done(function (response) {
-            //phoneCheckFormPOSTDone(response)
+            $("#phone-check-form").prop("disabled", false);
             registerFormPOSTDone(response)
         })
             .fail(function (xhr, status, error) {
@@ -130,9 +138,8 @@ $(document).ready(function(){
     $("#mac-register-form").on("submit", function (event) {
 
         event.preventDefault();
-        $('#warn').hide();
-        $('#error').hide();
-        $('#info').show().html(FORM_TEXT.mac_login_page.register_form.registering);
+        $(this).prop("disabled", true);
+        processRequest(FORM_TEXT.mac_login_page.register_form.registering);
 
         let mac_user_data = {
             phone: $("#cell_phone").val(),
@@ -149,6 +156,7 @@ $(document).ready(function(){
             type: "POST",
             data: mac_user_data
         }).done(function (response) {
+            $("#mac-register-form").prop("disabled", true);
             registerFormPOSTDone(response)
         })
             .fail(function (xhr, status, error) {
@@ -161,10 +169,11 @@ $(document).ready(function(){
     $("#sms-request-form").on("submit", function (event) {
 
         event.preventDefault();
+        $(this).prop("disabled", true);
+
         if (active_sms_code === false){
-            $('#warn').hide();
-            $('#error').hide();
-            $('#info').show().html(FORM_TEXT.mac_login_page.sms_request_form.code_sending);
+
+            processRequest(FORM_TEXT.mac_login_page.sms_request_form.code_sending);
         }
         active_sms_code = true;
 
@@ -182,6 +191,7 @@ $(document).ready(function(){
             data: smsRequestData
         })
             .done(function (response) {
+                $("#sms-request-form").prop("disabled", true);
                 smsRequestPOSTDone(response)
             })
             .fail(function (xhr, status, error) {
@@ -195,10 +205,8 @@ $(document).ready(function(){
     $("#sms-validation-form").on("submit", function (event) {
 
         event.preventDefault();
-
-        $('#warn').hide();
-        $('#error').hide();
-        $('#info').show().html(FORM_TEXT.mac_login_page.sms_validation_form.validating_code);
+        $(this).prop("disabled", true);
+        processRequest(FORM_TEXT.mac_login_page.sms_validation_form.validating_code);
 
         let smsValidateData = {
             phone_verification_code: $("#cell_phone_verification_code").val(),
@@ -214,6 +222,7 @@ $(document).ready(function(){
             data: smsValidateData
         })
             .done(function (response) {
+                $("#sms-validation-form").prop("disabled", true);
                 smsValidatePOSTDone(response)
             })
             .fail(function (xhr, status, error) {
@@ -338,6 +347,12 @@ $(document).ready(function(){
         }
     }
 
+    function processRequest(msg) {
+        $('#warn').hide();
+        $('#error').hide();
+        $('#info').show().html(msg);
+    }
+
     function handlingPostFail(message) {
         $('#mac-register-div').hide();
         $('#sms-validation-div').hide();
@@ -349,9 +364,8 @@ $(document).ready(function(){
     }
 
     function redirectURL() {
-
+        console.log("redirectURL worked..");
         $(location).attr('href', PORTAL_ACTION_URL);
-
     }
 
     function setCellPhoneInputText(cell_phone) {
@@ -419,7 +433,7 @@ $(document).ready(function(){
 
     // 2- ROUTER service -------------------------------------------------------------------------------------
     function routerDone(response) {
-        debug("router service :", response);
+        debug("router: service:", response);
 
         if (response.portal_code === "router.warn.7") {
             $('#code-div').show();
@@ -463,7 +477,7 @@ $(document).ready(function(){
 
     // X- CODE FORM RESPONSE FUNCTIONS-------------------------------------------------------------------------------
     function codeFormPOSTDone(response) {
-        debug("code_form_response : ", response);
+        debug("code response: ", response);
 
         if (response.portal_code === "code.error.1") {
 
@@ -516,7 +530,7 @@ $(document).ready(function(){
 
     // 3- MAC REGISTER FORM RESPONSE FUNCTIONS-------------------------------------------------------------------------------
     function registerFormPOSTDone(response) {
-        debug("register_form_response : ", response);
+        debug("register response: ", response);
 
         // for phone service patches
         if (response.portal_code === "phone.warn.1") {
@@ -597,7 +611,7 @@ $(document).ready(function(){
 
     // 4- SMS_REQUEST_SERVICE_RESPONSE FUNCTIONS--------------------------------------------------------------------
     function smsRequestPOSTDone(response) {
-        debug("sms_request_service_post_done : ", response);
+        debug("sms_request service: ", response);
 
         if (response.portal_code === "sms_request.warn.1" || response.portal_code === "sms_request.warn.2") {
 
@@ -654,7 +668,7 @@ $(document).ready(function(){
 
     // 5- SMS_VALIDATION_SERVICE_RESPONSE FUNCTIONS-----------------------------------------------------------------
     function smsValidatePOSTDone(response) {
-        debug("sms_validate_form_post_DONE", response);
+        debug("sms_validate service: ", response);
 
         if (response.portal_code === "sms_validate.warn.1" || response.portal_code === "sms_validate.warn.2") {
 

@@ -1,7 +1,7 @@
 <?php
 
 // Hedef URL
-$TENANT_URL  = 'https://sb.poyrazteknoloji.com/';
+$TENANT_URL  = 'http://ptech-cloud-hotspot-service.local/';
 
 
 $SERVICE_URI = 'api/v1/check-ip';
@@ -10,7 +10,7 @@ $url = $TENANT_URL . $SERVICE_URI;
 
 // Gönderilecek veriler
 $postData = array(
-    'API_KEY' => 'G5MIJP5T6LdyGz_r-vkE_CLVRPr8g-MCec75J-4WdD0',
+    'API_KEY' => '162a93f8d95d3f7311af5b6af212901a',
 );
 
 // cURL oturumunu başlatma
