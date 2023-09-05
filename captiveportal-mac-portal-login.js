@@ -2,14 +2,14 @@
 //$(function () {
 $(document).ready(function(){
 
-    //let test_mac = '00:00:00:00:00:32';
-    //let test_ip = '10.1.1.32';
+    //let test_mac = '00:00:00:00:00:03';
+    //let test_ip = '10.1.1.3';
     //set_test_env();
 
     //let ZONE = 'captive_portal_ptech_cloud_hotspot_dev'; // for test
+    let ZONE = $("#zone").val();
 
     let API_KEY = "162a93f8d95d3f7311af5b6af212901a";
-    let ZONE = $("#zone").val();
 
     let FORM_TEXT = {};
 
@@ -17,7 +17,7 @@ $(document).ready(function(){
 
     let PORTAL_ACTION_URL = $("#portal_action").val()
 
-    let TENANT_SERVICE_URL = "http://ptech-cloud-hotspot-service.local/";
+    let TENANT_SERVICE_URL = "https://hotspot.poyrazteknoloji.com/";
 
     let active_sms_code = false;
 
