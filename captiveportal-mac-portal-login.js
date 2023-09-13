@@ -2,12 +2,12 @@
 //$(function () {
 $(document).ready(function(){
 
-    //let test_mac = '00:00:00:00:00:03';
-    //let test_ip = '10.1.1.3';
-    //set_test_env();
+    let test_mac = '00:00:00:00:00:03';
+    let test_ip = '10.1.1.3';
+    set_test_env();
+    let ZONE = 'captive_portal_ptech_cloud_hotspot_dev'; // for test
 
-    //let ZONE = 'captive_portal_ptech_cloud_hotspot_dev'; // for test
-    let ZONE = $("#zone").val();
+    //let ZONE = $("#zone").val();
 
     let API_KEY = "162a93f8d95d3f7311af5b6af212901a";
 
@@ -17,9 +17,13 @@ $(document).ready(function(){
 
     let PORTAL_ACTION_URL = $("#portal_action").val()
 
-    let TENANT_SERVICE_URL = "https://hotspot.poyrazteknoloji.com/";
+    let TENANT_SERVICE_URL = "http://ptech-cloud-hotspot-service.local/";
 
     let active_sms_code = false;
+
+    let DEFAULT_COUNTRY_ID = -1;
+    let REGISTER_INTERNATIONAL = -1;
+    let E164_CODES;
 
     // Geri sayım başlangıç değeri: 5 dakika (saniye cinsinden)
     let countdown = 5 * 60;
@@ -39,6 +43,19 @@ $(document).ready(function(){
         .fail(function (xhr, status, error) {
             debugFail("load_captive_portal_text : fail", xhr, status, error);
             handlingPostFail("err : load_captive_portal_text service err");
+        });
+
+    // 0-) e164_phones Loads with Language Lines-------------------------------------------------------------------------
+    $.ajax({
+        type: "GET",
+        url: TENANT_SERVICE_URL + "api/v1/load_e164_code",
+        dataType: "json"
+    }).done(function (response) {
+        console.log('e164_phones .done worked');
+        e164_codes_done(response);  })
+        .fail(function (xhr, status, error) {
+            debugFail("e164_phones : fail", xhr, status, error);
+            handlingPostFail("err : e164_phones service err");
         });
 
     // 1-) GET:is-alive --------------------------------------------------------------------------------------------
@@ -112,7 +129,11 @@ $(document).ready(function(){
         $(this).prop("disabled", true);
         processRequest(FORM_TEXT.mac_login_page.phone_check_form.phone_checking);
 
+        let e164_code_id = -1;
+        REGISTER_INTERNATIONAL === 0 ? e164_code_id = DEFAULT_COUNTRY_ID : e164_code_id = $("#e164_code_phone_check").val();
+
         let phone_check_data = {
+            e164_code_id: e164_code_id,
             phone: $("#phone_check_phone").val(),
             mac: $("#mac_phone_check").val(),
             ip: $("#ip_phone_check").val(),
@@ -141,7 +162,11 @@ $(document).ready(function(){
         $(this).prop("disabled", true);
         processRequest(FORM_TEXT.mac_login_page.register_form.registering);
 
+        let e164_code_id = -1;
+        REGISTER_INTERNATIONAL === 0 ? e164_code_id = DEFAULT_COUNTRY_ID : e164_code_id = $("#e164_code_mac_register").val();
+
         let mac_user_data = {
+            e164_code_id: e164_code_id,
             phone: $("#cell_phone").val(),
             person: $("#person").val(),
             email: $("#email").val(),
@@ -272,6 +297,64 @@ $(document).ready(function(){
         $('#info').hide();
         $('#warn').hide();
         $('#error').hide();
+
+    }
+
+    function e164_codes_done(response) {
+
+        //let e164_codes = JSON.parse(response.e164_codes);
+        E164_CODES = JSON.parse(response.e164_codes);
+        DEFAULT_COUNTRY_ID = JSON.parse(response.DEFAULT_COUNTRY_ID);
+        REGISTER_INTERNATIONAL = JSON.parse(response.REGISTER_INTERNATIONAL);
+
+        console.log('e164_codes_done: REGISTER_INTERNATIONAL: ', REGISTER_INTERNATIONAL);
+        console.log('e164_codes_done: DEFAULT_COUNTRY_ID: ', DEFAULT_COUNTRY_ID);
+        if (REGISTER_INTERNATIONAL === 0){
+            $('#e164_code_phone_check').prop("disabled", true);
+        }else {
+            $('#e164_code_phone_check').prop("disabled", false);
+        }
+
+        for (var index = 0; index < E164_CODES.length; index++) {
+            //console.log('id:', E164_CODES[index].id, 'iso:', E164_CODES[index].iso, 'phone_code', E164_CODES[index].phone_code );
+            if (E164_CODES[index].id === DEFAULT_COUNTRY_ID){
+                $('#e164_code_phone_check').append('<option selected value="' + E164_CODES[index].id + '">' + '(' + E164_CODES[index].iso + ')' + '  +' + E164_CODES[index].phone_code + '</option>');
+            }else {
+                $('#e164_code_phone_check').append('<option value="' + E164_CODES[index].id + '">' + '(' + E164_CODES[index].iso + ')' + '  +' + E164_CODES[index].phone_code + '</option>');
+            }
+        }
+
+        //e164_code_mac_register
+        if (REGISTER_INTERNATIONAL === 0){
+            $('#e164_code_mac_register').prop("disabled", true);
+        }else {
+            $('#e164_code_mac_register').prop("disabled", false);
+        }
+
+        for (var index = 0; index < E164_CODES.length; index++) {
+            //console.log('id:', E164_CODES[index].id, 'iso:', E164_CODES[index].iso, 'phone_code', E164_CODES[index].phone_code );
+            if (E164_CODES[index].id === DEFAULT_COUNTRY_ID){
+                $('#e164_code_mac_register').append('<option selected value="' + E164_CODES[index].id + '">' + '(' + E164_CODES[index].iso + ')' + '  +' + E164_CODES[index].phone_code + '</option>');
+            }else {
+                $('#e164_code_mac_register').append('<option value="' + E164_CODES[index].id + '">' + '(' + E164_CODES[index].iso + ')' + '  +' + E164_CODES[index].phone_code + '</option>');
+            }
+        }
+
+        //e164_code_sms_validate
+        if (REGISTER_INTERNATIONAL === 0){
+            $('#e164_code_sms_validate').prop("disabled", true);
+        }else {
+            $('#e164_code_sms_validate').prop("disabled", false);
+        }
+
+        for (var index = 0; index < E164_CODES.length; index++) {
+            //console.log('id:', E164_CODES[index].id, 'iso:', E164_CODES[index].iso, 'phone_code', E164_CODES[index].phone_code );
+            if (E164_CODES[index].id === DEFAULT_COUNTRY_ID){
+                $('#e164_code_sms_validate').append('<option selected value="' + E164_CODES[index].id + '">' + '(' + E164_CODES[index].iso + ')' + '  +' + E164_CODES[index].phone_code + '</option>');
+            }else {
+                $('#e164_code_sms_validate').append('<option value="' + E164_CODES[index].id + '">' + '(' + E164_CODES[index].iso + ')' + '  +' + E164_CODES[index].phone_code + '</option>');
+            }
+        }
 
     }
 

@@ -5,16 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--
     <script src="https://pfsense.hotspot.poyrazteknoloji.com:8003/captiveportal-tailwindcss-3.3.1.css"></script>
+
     <link type="text/css" href="captiveportal-tailwindcss-3.3.1.css">
+    <link type="text/css" href="captiveportal-tailwindcss-3.3.3.css">
+
     <script src="https://cdn.tailwindcss.com/3.3.1"></script>
     <script src="https://pfsense.hotspot.poyrazteknoloji.com:8003/captiveportal-tailwindcss-3.3.1.css"></script>
-     <link type="text/css" href="captiveportal-tailwindcss-3.3.3.css" rel="stylesheet">
-    -->
     <script src="https://cdn.tailwindcss.com/3.3.1"></script>
 
+    <script src="captiveportal-jquery-3.6.4.min.js"></script>
+    -->
+
+
+    <script src="https://cdn.tailwindcss.com/3.3.1"></script>
 
     <script src="captiveportal-tailwind.config.js"></script>
-    <script src="captiveportal-jquery-3.6.4.min.js"></script>
+    <script src="captiveportal-jquery-3.7.1.min.js"></script>
 
     <script src="captiveportal-mac-portal-login.js"></script>
     <title></title>
@@ -62,8 +68,11 @@
                     <div>
                         <label id="phone_check_phone_label" for="phone_check_phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
                         <div class="flex">
-                            <span id="phone_check_phone_country_code" class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
-                            </span>
+                            <div class="flex w-48">
+                                <select id="e164_code_phone_check" name="e164_code_phone_check" class="font-mono font-bold bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        autofocus required>
+                                </select>
+                            </div>
                             <input type="text" name="phone_check_phone" id="phone_check_phone" class="font-mono font-bold rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" maxlength="10" required="">
                         </div>
                     </div>
@@ -89,8 +98,16 @@
                     <div>
                         <label id="cell_phone_label" for="cell_phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
                         <div class="flex">
+                            <div class="flex w-48">
+                                <select id="e164_code_mac_register" name="e164_code_mac_register" class="font-mono font-bold bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        autofocus required>
+                                </select>
+                            </div>
+                            <!--
                             <span id="cell_phone_country_code" class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+
                             </span>
+                            -->
                             <input type="text" name="cell_phone" id="cell_phone" class="font-mono font-bold rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" maxlength="10" required="">
                         </div>
                     </div>
@@ -129,7 +146,14 @@
                 <form id="sms-request-form" name="sms-request-form" class="space-y-4 md:space-y-6" method="POST" action="">
                     <div>
                         <label id="sms_request_cell_phone_label" for="cell_phone_sms_request" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cell Phone</label>
-                        <input type="text" id="cell_phone_sms_request" name="cell_phone_sms_request"  class="font-semibold bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required pattern="[0-9]{10}" maxlength="10">
+                        <div class="flex">
+                            <div class="flex w-48">
+                                <select id="e164_code_sms_validate" name="e164_code_sms_validate" class="font-mono font-bold bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        autofocus required>
+                                </select>
+                            </div>
+                            <input type="text" id="cell_phone_sms_request" name="cell_phone_sms_request"  class="font-semibold bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required pattern="[0-9]{10}" maxlength="10">
+                        </div>
                     </div>
 
                     <!-- hidden things:4 - must be for DEV and production -->
