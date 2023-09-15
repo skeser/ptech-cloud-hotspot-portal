@@ -8,28 +8,19 @@ $(document).ready(function(){
     let ZONE = 'captive_portal_ptech_cloud_hotspot_dev'; // for test
 
     //let ZONE = $("#zone").val();
-
     let API_KEY = "162a93f8d95d3f7311af5b6af212901a";
-
     let FORM_TEXT = {};
-
     init();
-
     let PORTAL_ACTION_URL = $("#portal_action").val()
-
     let TENANT_SERVICE_URL = "http://ptech-cloud-hotspot-service.local/";
-
     let active_sms_code = false;
-
     let DEFAULT_COUNTRY_ID = -1;
     let REGISTER_INTERNATIONAL = -1;
     let E164_CODES;
 
-    // Geri sayım başlangıç değeri: 5 dakika (saniye cinsinden)
-    let countdown = 5 * 60;
+    let countdown = 5 * 60; // Geri sayım başlangıç değeri: 5 dakika (saniye cinsinden)
 
-    // Geri sayımı gösteren HTML elementinin seçimi
-    let countdownElement = $('#countdown');
+    let countdownElement = $('#countdown'); // Geri sayımı gösteren HTML elementinin seçimi
 
     // 0-) TEXTS Loads with Language Lines-------------------------------------------------------------------------
     $.ajax({
@@ -50,29 +41,22 @@ $(document).ready(function(){
         type: "GET",
         url: TENANT_SERVICE_URL + "api/v1/load_e164_code",
         dataType: "json"
-    }).done(function (response) {
-        console.log('e164_phones .done worked');
-        e164_codes_done(response);  })
+    }).done(function (response) {   e164_codes_done(response);  })
         .fail(function (xhr, status, error) {
             debugFail("e164_phones : fail", xhr, status, error);
             handlingPostFail("err : e164_phones service err");
         });
 
     // 1-) GET:is-alive --------------------------------------------------------------------------------------------
-    /*
     $.ajax({
         type: "GET",
         url: TENANT_SERVICE_URL + "api/v1/ping",
         dataType: "json"
-    }).done(function (response) {
-        pingDone(response)
-    })
+    }).done(function (response) {   pingDone(response)})
         .fail(function (xhr, status, error) {
             debugFail("ping :", xhr, status, error);
             handlingPostFail("err : ping service unavailable (503)");
         });
-
-     */
 
     // 2-) POST:router ------------------------------------------------------------------------------------
     let router_post_data = {
@@ -260,8 +244,6 @@ $(document).ready(function(){
 
     function set_test_env() {
         // for test on karakacan
-
-
         // 1:code service
         $('#mac_code').val(test_mac);
         $('#ip_code').val(test_ip);
@@ -306,9 +288,9 @@ $(document).ready(function(){
         E164_CODES = JSON.parse(response.e164_codes);
         DEFAULT_COUNTRY_ID = JSON.parse(response.DEFAULT_COUNTRY_ID);
         REGISTER_INTERNATIONAL = JSON.parse(response.REGISTER_INTERNATIONAL);
-
         console.log('e164_codes_done: REGISTER_INTERNATIONAL: ', REGISTER_INTERNATIONAL);
         console.log('e164_codes_done: DEFAULT_COUNTRY_ID: ', DEFAULT_COUNTRY_ID);
+
         if (REGISTER_INTERNATIONAL === 0){
             $('#e164_code_phone_check').prop("disabled", true);
         }else {
@@ -465,6 +447,7 @@ $(document).ready(function(){
         console.log("+phone : " + response.phone);
         console.log("+sms_mod : " + response.sms_mod);
         console.log("+API_KEY : " + API_KEY);
+
         //console.log("+test_mac: " + test_mac );
         //console.log("+test_ip: " + test_ip );
         console.log("END : DEBUG -------------------------------------------");
@@ -480,6 +463,8 @@ $(document).ready(function(){
 
     // Geri sayım işlemini gerçekleştiren fonksiyon
     function startCountdown() {
+
+        $('#countdown').show();
         console.log("startCountdown worked")
         // Countdown değeri sıfırdan büyük olduğu sürece geri sayım devam eder
         if (countdown > 0) {

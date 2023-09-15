@@ -1,7 +1,7 @@
 <?php
 
 // Hedef URL
-$TENANT_URL  = 'http://ptech-cloud-hotspot-service.local/';
+$TENANT_URL  = 'https://sb.poyrazteknoloji.com/';
 
 
 $SERVICE_URI = 'api/v1/check-ip';
