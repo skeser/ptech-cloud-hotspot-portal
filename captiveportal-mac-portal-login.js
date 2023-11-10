@@ -2,7 +2,7 @@
 //$(function () {
 $(document).ready(function(){
 
-    let test_mac = '00:00:00:00:00:03';
+    let test_mac = '00:00:00:00:00:98';
     let test_ip = '10.1.1.3';
     set_test_env();
     let ZONE = 'captive_portal_ptech_cloud_hotspot_dev'; // for test
@@ -12,7 +12,9 @@ $(document).ready(function(){
     let FORM_TEXT = {};
     init();
     let PORTAL_ACTION_URL = $("#portal_action").val()
+    //let TENANT_SERVICE_URL = "https://kirkoluk.poyrazteknoloji.com/";
     let TENANT_SERVICE_URL = "http://ptech-cloud-hotspot-service.local/";
+
     let active_sms_code = false;
     let DEFAULT_COUNTRY_ID = -1;
     let REGISTER_INTERNATIONAL = -1;
@@ -21,6 +23,24 @@ $(document).ready(function(){
     let countdown = 5 * 60; // Geri sayım başlangıç değeri: 5 dakika (saniye cinsinden)
 
     let countdownElement = $('#countdown'); // Geri sayımı gösteren HTML elementinin seçimi
+
+
+    // 0-) INIT Loads with Language Lines-------------------------------------------------------------------------
+    /*
+    $.ajax({
+        type: "GET",
+        url: TENANT_SERVICE_URL + "api/v1/init",
+        dataType: "json"
+    }).done(function (response) {
+        FORM_TEXT = response;
+
+    })
+        .fail(function (xhr, status, error) {
+            debugFail("load_captive_portal_text : fail", xhr, status, error);
+            handlingPostFail("err : load_captive_portal_text service err");
+        });
+
+     */
 
     // 0-) TEXTS Loads with Language Lines-------------------------------------------------------------------------
     $.ajax({
